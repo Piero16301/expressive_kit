@@ -18,5 +18,14 @@
         }
     ],
     "useGitignore": true,
-    "words": []
+    "words": [
+        "hugeicons",
+        "Orbitron",
+        "Github",
+        "Playfair",
+        "Nunito",
+        "Merriweather",
+        "Pressable",
+        "squircle"
+    ]
 }

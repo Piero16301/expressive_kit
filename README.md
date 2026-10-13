@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/expressive_kit.svg)](https://pub.dev/packages/expressive_kit)
 [![pub points](https://img.shields.io/pub/points/expressive_kit?color=2E8B57&label=pub%20points)](https://pub.dev/packages/expressive_kit/score)
 [![code factor](https://www.codefactor.io/repository/github/Piero16301/expressive_kit/badge)](https://www.codefactor.io/repository/github/Piero16301/expressive_kit)
-[![analysis](https://github.com/Piero16301/expressive_kit/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Piero16301/expressive_kit/actions)
+[![analysis](https://github.com/Piero16301/expressive_kit/actions/workflows/deploy.yaml/badge.svg)](https://github.com/Piero16301/expressive_kit/actions)
 [![codecov](https://codecov.io/gh/Piero16301/expressive_kit/graph/badge.svg)](https://codecov.io/gh/Piero16301/expressive_kit)
 [![Star on Github](https://img.shields.io/github/stars/Piero16301/expressive_kit.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/Piero16301/expressive_kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
