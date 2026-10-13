@@ -1,3 +1,17 @@
+## 0.0.2
+
+* **Typography & Fonts**:
+  * Added `ExpressiveFonts` utility with package-prefixed family constants and `getAvailableFonts()` lookup.
+  * Bundled 9 curated variable fonts: Google Sans Flex, Merriweather, Montserrat, Nunito, Open Sans, Orbitron, Playfair Display, Roboto, and Source Code Pro.
+  * Set `ExpressiveFonts.googleSansFlex` as default typography in `ExpressiveTheme.light()` and `ExpressiveTheme.dark()`.
+  * Added comprehensive unit test coverage for typography utilities.
+* **Icons Ecosystem**:
+  * Fully unified icon ecosystem using `hugeicons: ^1.2.0` across all components and gallery example.
+* **Documentation & Examples**:
+  * Overhauled `README.md` with comprehensive English documentation, component showcases, and UI screenshots.
+* **CI/CD & Automation**:
+  * Configured automated pub.dev publishing via GitHub Actions with OpenID Connect (OIDC) token authentication on semantic release tags (`v*`).
+
 ## 0.0.1
 
 * **Initial release of `expressive_kit`** — A cohesive Flutter design system implementing Material 3 Expressive guidelines.
