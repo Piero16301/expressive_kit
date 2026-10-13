@@ -1,0 +1,72 @@
+name: expressive_kit
+description: A modern Flutter design system providing Material 3 Expressive components, spring motions, tactile feedback, and unified theme styles.
+version: 0.0.1
+homepage: https://github.com/Piero16301/expressive_kit
+repository: https://github.com/Piero16301/expressive_kit
+issue_tracker: https://github.com/Piero16301/expressive_kit/issues
+
+environment:
+  sdk: '>=3.12.0 <4.0.0'
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hugeicons: ^1.2.0
+  material_ui: ^1.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  fonts:
+    - family: GoogleSansFlex
+      fonts:
+        - asset: assets/fonts/GoogleSansFlex-VariableFont.ttf
+    - family: Merriweather
+      fonts:
+        - asset: assets/fonts/Merriweather-VariableFont.ttf
+        - asset: assets/fonts/Merriweather-Italic-VariableFont.ttf
+          style: italic
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-VariableFont.ttf
+        - asset: assets/fonts/Montserrat-Italic-VariableFont.ttf
+          style: italic
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-VariableFont.ttf
+        - asset: assets/fonts/Nunito-Italic-VariableFont.ttf
+          style: italic
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans-VariableFont.ttf
+        - asset: assets/fonts/OpenSans-Italic-VariableFont.ttf
+          style: italic
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron-VariableFont.ttf
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-VariableFont.ttf
+        - asset: assets/fonts/PlayfairDisplay-Italic-VariableFont.ttf
+          style: italic
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-VariableFont.ttf
+        - asset: assets/fonts/Roboto-Italic-VariableFont.ttf
+          style: italic
+    - family: SourceCodePro
+      fonts:
+        - asset: assets/fonts/SourceCodePro-VariableFont.ttf
+        - asset: assets/fonts/SourceCodePro-Italic-VariableFont.ttf
+          style: italic
+
+topics:
+  - design-system
+  - material3
+  - ui-components
+  - expressive
+  - widgets
