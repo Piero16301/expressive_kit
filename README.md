@@ -5,7 +5,7 @@
 [![code factor](https://www.codefactor.io/repository/github/Piero16301/expressive_kit/badge)](https://www.codefactor.io/repository/github/Piero16301/expressive_kit)
 [![analysis](https://github.com/Piero16301/expressive_kit/actions/workflows/deploy.yaml/badge.svg)](https://github.com/Piero16301/expressive_kit/actions)
 [![codecov](https://codecov.io/gh/Piero16301/expressive_kit/graph/badge.svg)](https://codecov.io/gh/Piero16301/expressive_kit)
-[![Star on Github](https://img.shields.io/github/stars/Piero16301/expressive_kit.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/Piero16301/expressive_kit)
+[![Star on GitHub](https://img.shields.io/github/stars/Piero16301/expressive_kit.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/Piero16301/expressive_kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sanjuanpamk)
 
