@@ -92,6 +92,9 @@ jobs:
       - name: 📚 Git Checkout
         uses: actions/checkout@v7
 
+      - name: 🎯 Provision pub.dev OIDC Token
+        uses: dart-lang/setup-dart@v1
+
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
