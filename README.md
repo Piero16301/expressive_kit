@@ -21,6 +21,7 @@ A modern, cohesive Flutter design system implementing **Material 3 Expressive** 
 - 🔤 **Curated Variable Fonts**: Bundled typography presets via `ExpressiveFonts` (Google Sans Flex, Montserrat, Roboto, Open Sans, Orbitron, and more).
 - 📱 **Interactive Controls**: Buttons with loading states, split buttons with contextual dropdowns, segmented pickers, multi-shape icon buttons, switches, and sliders.
 - 🛡️ **100% Test Coverage**: Production-ready, null-safe codebase tested with 100% unit and widget test coverage.
+- 🤖 **AI Agent Ready**: Includes a bundled [`SKILL.md`](SKILL.md) skill guide for any AI coding assistant (Cursor, Antigravity, Claude Code, Copilot) to implement components or migrate existing codebases.
 
 ---
 
@@ -30,7 +31,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.1
+  expressive_kit: ^0.0.3
   hugeicons: ^1.2.0
 ```
 
@@ -59,6 +60,15 @@ MaterialApp(
   home: const HomeScreen(),
 );
 ```
+
+### 🤖 AI Agent Skill & Migration Guide
+
+This repository includes a dedicated [`SKILL.md`](SKILL.md) designed for AI coding assistants (such as **Antigravity**, **Cursor**, **Windsurf**, **Claude Code**, or **GitHub Copilot**).
+
+You can prompt or point your agent to [`SKILL.md`](SKILL.md) to:
+- Build new screens using authentic Material 3 Expressive components.
+- Configure themes, dynamic color schemes, and bundled variable fonts.
+- **Migrate existing apps**: Automatically replace legacy Flutter widgets (`ElevatedButton`, `Switch`, `CircularProgressIndicator`, `AppBar`, etc.) with `expressive_kit` equivalents using the included widget replacement matrix.
 
 ---
 
@@ -469,21 +479,49 @@ ExpressiveTopAppBar.large(
 )
 ```
 
----
+### 5. Typography & Variable Fonts
 
-## Typography
+Curated variable fonts bundled locally with zero network requests, optical weight variations, and live global theme switching.
 
-`expressive_kit` bundles variable fonts ready to use through `ExpressiveFonts`:
+![Typography Components](screenshots/fonts_components.png)
 
-- `ExpressiveFonts.googleSansFlex` (Default)
-- `ExpressiveFonts.merriweather`
-- `ExpressiveFonts.montserrat`
-- `ExpressiveFonts.nunito`
-- `ExpressiveFonts.openSans`
-- `ExpressiveFonts.orbitron`
-- `ExpressiveFonts.playfairDisplay`
-- `ExpressiveFonts.roboto`
-- `ExpressiveFonts.sourceCodePro`
+#### • ExpressiveFonts
+Easily apply bundled variable fonts to your themes or individual text styles:
+
+```dart
+// Apply to global theme
+MaterialApp(
+  theme: ExpressiveTheme.light(
+    baseColor: const Color(0xFF1E88E5),
+    fontFamily: ExpressiveFonts.googleSansFlex,
+  ),
+  home: const HomeScreen(),
+);
+
+// Apply to individual TextStyles
+Text(
+  'Expressive Heading',
+  style: TextStyle(
+    fontFamily: ExpressiveFonts.orbitron,
+    fontWeight: FontWeight.bold,
+  ),
+);
+
+// Inspect all available font families
+final fontsMap = ExpressiveFonts.getAvailableFonts();
+```
+
+| Family Constant | Typeface Name | Style Category |
+| :--- | :--- | :--- |
+| `ExpressiveFonts.googleSansFlex` | Google Sans Flex | Sans-Serif • Clean UI / Modern (Default) |
+| `ExpressiveFonts.merriweather` | Merriweather | Serif • Editorial Reading |
+| `ExpressiveFonts.montserrat` | Montserrat | Geometric Sans • Punchy Branding |
+| `ExpressiveFonts.nunito` | Nunito | Rounded Sans • Friendly & Approachable |
+| `ExpressiveFonts.openSans` | Open Sans | Humanist Sans • Neutral Mobile |
+| `ExpressiveFonts.orbitron` | Orbitron | Display • Futuristic / Sci-Fi / Numbers |
+| `ExpressiveFonts.playfairDisplay` | Playfair Display | High-Contrast Serif • Classical Elegance |
+| `ExpressiveFonts.roboto` | Roboto | Neo-Grotesque Sans • Natural Reading |
+| `ExpressiveFonts.sourceCodePro` | Source Code Pro | Monospace • Code & Terminals |
 
 ---
 

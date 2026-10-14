@@ -58,18 +58,35 @@ class ExpressiveNavigationBar extends StatelessWidget {
             final destination = destinations[index];
             final isSelected = index == selectedIndex;
 
-            var iconWidget = isSelected
-                ? (destination.selectedIcon ?? destination.icon)
+            final targetIconColor = isSelected
+                ? colorScheme.onSecondaryContainer
+                : colorScheme.onSurfaceVariant;
+
+            final baseIcon = destination.selectedIcon != null
+                ? AnimatedSwitcher(
+                    duration: ExpressiveMotion.durationShort,
+                    switchInCurve: Curves.easeOutCubic,
+                    switchOutCurve: Curves.easeInCubic,
+                    child: KeyedSubtree(
+                      key: ValueKey(isSelected),
+                      child: isSelected
+                          ? destination.selectedIcon!
+                          : destination.icon,
+                    ),
+                  )
                 : destination.icon;
 
-            iconWidget = IconTheme(
-              data: IconThemeData(
-                color: isSelected
-                    ? colorScheme.onSecondaryContainer
-                    : colorScheme.onSurfaceVariant,
-                size: 24,
-              ),
-              child: iconWidget,
+            Widget iconWidget = TweenAnimationBuilder<Color?>(
+              duration: ExpressiveMotion.durationShort,
+              curve: Curves.easeOutCubic,
+              tween: ColorTween(end: targetIconColor),
+              builder: (context, animatedColor, child) {
+                return IconTheme(
+                  data: IconThemeData(color: animatedColor, size: 24),
+                  child: child!,
+                );
+              },
+              child: baseIcon,
             );
 
             if (destination.showBadgeDot || destination.badgeText != null) {
@@ -118,22 +135,32 @@ class ExpressiveNavigationBar extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AnimatedContainer(
-                      duration: ExpressiveMotion.durationShort,
-                      curve: ExpressiveMotion.springBouncy,
+                    SizedBox(
                       width: 64,
                       height: 32,
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? activeIndicator
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AnimatedContainer(
+                            duration: ExpressiveMotion.durationShort,
+                            curve: Curves.easeOutCubic,
+                            width: isSelected ? 64 : 0,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: activeIndicator.withValues(
+                                alpha: isSelected ? 1.0 : 0.0,
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          Center(child: iconWidget),
+                        ],
                       ),
-                      child: Center(child: iconWidget),
                     ),
                     const SizedBox(height: 4),
                     AnimatedDefaultTextStyle(
                       duration: ExpressiveMotion.durationShort,
+                      curve: Curves.easeOutCubic,
                       style:
                           theme.textTheme.labelMedium?.copyWith(
                             fontWeight: isSelected

@@ -1,3 +1,21 @@
+## 0.0.3
+
+* **Widgets & Enhancements**:
+  * Fixed destination transition flicker in `ExpressiveNavigationBar` by transitioning color alpha directly (`activeIndicator.withValues(alpha: ...)`) rather than lerping to `Colors.transparent`.
+  * Prevented color overshoots and white flashes in `ExpressiveNavigationBar` pill indicators by adopting `Curves.easeOutCubic`.
+  * Added synchronized icon color tweening (`TweenAnimationBuilder<Color?>`) and smooth cross-fading for `selectedIcon` (`AnimatedSwitcher`).
+  * Updated `ExpressiveNavigationBar` widget tests to maintain **100.0% line coverage** across all library source files.
+* **AI Agent Skill**:
+  * Added [`SKILL.md`](SKILL.md) (in repository root and `.agents/skills/expressive-kit/`) as an actionable guide for AI coding assistants (Antigravity, Cursor, Windsurf, Claude Code, GitHub Copilot).
+  * Included complete component usage patterns, theme and variable font configurations, and a comprehensive widget-by-widget migration guide from standard Material/Cupertino to `expressive_kit`.
+* **CI/CD Automation**:
+  * Fixed automated pub.dev publishing workflow by integrating `dart-lang/setup-dart@v1` to properly provision and register the GitHub Actions OpenID Connect (OIDC) token before publishing.
+* **Documentation & Examples**:
+  * Added dedicated interactive Typography tab in `example/lib/main.dart` showcasing all 9 bundled variable font specimens (`ExpressiveFonts`), live custom text preview, optical weight variations, and live global theme font switching.
+  * Refined input field prefix icon sizing in `example/lib/main.dart` for visual precision.
+  * Added `screenshots/fonts_components.png` and updated `README.md` with Section 5 "Typography & Variable Fonts".
+  * Updated `README.md` with instructions on utilizing the AI agent skill and bumped installation version to `^0.0.3`.
+
 ## 0.0.2
 
 * **Typography & Fonts**:

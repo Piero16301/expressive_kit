@@ -7,7 +7,7 @@ void main() {
     testWidgets('renders destinations with badges and handles selection', (
       tester,
     ) async {
-      int? selectedIndex;
+      int selectedIndex = 0;
       final destinations = [
         ExpressiveNavigationDestination(
           icon: const Icon(Icons.home_outlined),
@@ -28,15 +28,21 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            bottomNavigationBar: ExpressiveNavigationBar(
-              destinations: destinations,
-              selectedIndex: 0,
-              backgroundColor: Colors.white,
-              indicatorColor: Colors.blue.shade100,
-              height: 70,
-              onDestinationSelected: (idx) => selectedIndex = idx,
-            ),
+          home: StatefulBuilder(
+            builder: (context, setState) {
+              return Scaffold(
+                bottomNavigationBar: ExpressiveNavigationBar(
+                  destinations: destinations,
+                  selectedIndex: selectedIndex,
+                  backgroundColor: Colors.white,
+                  indicatorColor: Colors.blue.shade100,
+                  height: 70,
+                  onDestinationSelected: (idx) {
+                    setState(() => selectedIndex = idx);
+                  },
+                ),
+              );
+            },
           ),
         ),
       );
@@ -50,6 +56,12 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(selectedIndex, 1);
+
+      // Tap Home to trigger transition from destination.icon back to destination.selectedIcon
+      await tester.tap(find.text('Home'));
+      await tester.pumpAndSettle();
+
+      expect(selectedIndex, 0);
     });
 
     test('asserts when selectedIndex is invalid', () {
