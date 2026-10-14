@@ -8,8 +8,6 @@
 * **AI Agent Skill**:
   * Added [`SKILL.md`](SKILL.md) (in repository root and `.agents/skills/expressive-kit/`) as an actionable guide for AI coding assistants (Antigravity, Cursor, Windsurf, Claude Code, GitHub Copilot).
   * Included complete component usage patterns, theme and variable font configurations, and a comprehensive widget-by-widget migration guide from standard Material/Cupertino to `expressive_kit`.
-* **CI/CD Automation**:
-  * Fixed automated pub.dev publishing workflow by integrating `dart-lang/setup-dart@v1` to properly provision and register the GitHub Actions OpenID Connect (OIDC) token before publishing.
 * **Documentation & Examples**:
   * Added dedicated interactive Typography tab in `example/lib/main.dart` showcasing all 9 bundled variable font specimens (`ExpressiveFonts`), live custom text preview, optical weight variations, and live global theme font switching.
   * Refined input field prefix icon sizing in `example/lib/main.dart` for visual precision.
