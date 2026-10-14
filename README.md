@@ -19,6 +19,7 @@ A modern, cohesive Flutter design system implementing **Material 3 Expressive** 
 - ⚡ **Authentic Spring Motion**: Built-in motion tokens (`ExpressiveMotion.springBouncy`, `springGentle`, and `emphasized`) for natural, energetic physical feedback.
 - 🌊 **Wavy Progress Indicators**: Sinusoidal linear and circular progress indicators for both determinate and indeterminate loading states with track spacing.
 - 🔤 **Curated Variable Fonts**: Bundled typography presets via `ExpressiveFonts` (Google Sans Flex, Montserrat, Roboto, Open Sans, Orbitron, and more).
+- 🌍 **Built-in Localization**: Out-of-the-box localizations for theme modes, colors, and languages across 6 languages (`en`, `es`, `it`, `de`, `fr`, `pt`).
 - 📱 **Interactive Controls**: Buttons with loading states, split buttons with contextual dropdowns, segmented pickers, multi-shape icon buttons, switches, and sliders.
 - 🛡️ **100% Test Coverage**: Production-ready, null-safe codebase tested with 100% unit and widget test coverage.
 - 🤖 **AI Agent Ready**: Includes a bundled [`SKILL.md`](SKILL.md) skill guide for any AI coding assistant (Cursor, Antigravity, Claude Code, Copilot) to implement components or migrate existing codebases.
@@ -31,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.3
+  expressive_kit: ^0.0.4
   hugeicons: ^1.2.0
 ```
 
@@ -50,13 +51,16 @@ Initialize your application with the expressive theme generator:
 MaterialApp(
   title: 'My Expressive App',
   theme: ExpressiveTheme.light(
-    baseColor: const Color(0xFF1E88E5),
-    fontFamily: ExpressiveFonts.googleSansFlex,
+    baseColor: ExpressiveColors.defaultColor,
+    fontFamily: ExpressiveFonts.defaultFont,
   ),
   darkTheme: ExpressiveTheme.dark(
-    baseColor: const Color(0xFF1E88E5),
-    fontFamily: ExpressiveFonts.googleSansFlex,
+    baseColor: ExpressiveColors.defaultColor,
+    fontFamily: ExpressiveFonts.defaultFont,
   ),
+  themeMode: ExpressiveTheme.defaultTheme,
+  localizationsDelegates: ExpressiveLocalizations.localizationsDelegates,
+  supportedLocales: ExpressiveLocalizations.supportedLocales,
   home: const HomeScreen(),
 );
 ```
@@ -508,7 +512,7 @@ Text(
 );
 
 // Inspect all available font families
-final fontsMap = ExpressiveFonts.getAvailableFonts();
+final fontsMap = ExpressiveFonts.availableFonts;
 ```
 
 | Family Constant | Typeface Name | Style Category |
@@ -522,6 +526,35 @@ final fontsMap = ExpressiveFonts.getAvailableFonts();
 | `ExpressiveFonts.playfairDisplay` | Playfair Display | High-Contrast Serif • Classical Elegance |
 | `ExpressiveFonts.roboto` | Roboto | Neo-Grotesque Sans • Natural Reading |
 | `ExpressiveFonts.sourceCodePro` | Source Code Pro | Monospace • Code & Terminals |
+
+---
+
+### 6. Colors & Localization
+
+#### • ExpressiveColors
+Standardized 19-color dynamic palette with key-based resolution and default color:
+
+```dart
+// Predefined default color
+final defaultColor = ExpressiveColors.defaultColor; // Colors.teal
+
+// Lookup color by key
+final redColor = ExpressiveColors.fromKey('RED');
+final colorKey = ExpressiveColors.toKey(Colors.teal); // 'TEAL'
+
+// Access the complete palette
+final allColors = ExpressiveColors.palette;
+```
+
+#### • Built-in Localization (`ExpressiveLocalizations`)
+Provides localized labels for themes, colors, and languages across 6 locales: English (`en`), Spanish (`es`), Italian (`it`), German (`de`), French (`fr`), and Portuguese (`pt`).
+
+```dart
+// Convenient extension methods
+final themeName = ThemeMode.system.localizedName(context);       // e.g. "Sistema" / "System"
+final languageName = const Locale('it').localizedName(context);  // e.g. "Italiano" / "Italian"
+final colorName = Colors.teal.localizedName(context);            // e.g. "Turquesa" / "Teal"
+```
 
 ---
 

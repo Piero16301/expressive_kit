@@ -1122,7 +1122,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   // ---------------------------------------------------------------------------
   Widget _buildTypographyTab() {
     final theme = Theme.of(context);
-    final availableFonts = ExpressiveFonts.getAvailableFonts();
+    const availableFonts = ExpressiveFonts.availableFonts;
 
     const fontDescriptions = <String, String>{
       'Google Sans Flex': "Modern geometric UI font with adaptive optical weights. Google's signature typeface.",

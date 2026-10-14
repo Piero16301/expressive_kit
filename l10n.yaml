@@ -1,0 +1,6 @@
+arb-dir: lib/src/l10n
+template-arb-file: expressive_en.arb
+output-localization-file: expressive_localizations.dart
+output-class: ExpressiveLocalizations
+output-dir: lib/src/l10n/generated
+header: "// coverage:ignore-file"

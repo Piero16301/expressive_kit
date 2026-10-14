@@ -1,3 +1,19 @@
+## 0.0.4
+
+* **Internationalization & Localization (i18n / l10n)**:
+  * Added built-in `ExpressiveLocalizations` supporting 6 locales: English (`en`), Spanish (`es`), Italian (`it`), German (`de`), French (`fr`), and Portuguese (`pt`).
+  * Included localized strings for theme modes (`themeLight`, `themeDark`, `themeSystem`), language names, and all 19 standardized Material colors.
+  * Added `ExpressiveLocalizationExtensions` providing convenient `.localizedName(context)` extension methods on `ThemeMode`, `Locale`, and `Color`.
+  * Exported `ExpressiveLocalizations` directly in `package:expressive_kit/expressive_kit.dart`.
+* **Theme & Colors**:
+  * Added `ExpressiveColors` with standardized 19-color `palette`, `defaultColor` (`Colors.teal`), and `fromKey()` / `toKey()` helpers.
+  * Adopted `ExpressiveColors.defaultColor` as the default `baseColor` parameter in `ExpressiveTheme.light()` and `ExpressiveTheme.dark()`.
+  * Added `ExpressiveTheme.defaultTheme` initialized to `ThemeMode.system`.
+  * Replaced deprecated `Color.value` access with `Color.toARGB32()` for Flutter 3.27+ wide color gamut support.
+* **Typography**:
+  * Unified `ExpressiveFonts` by replacing the redundant `getAvailableFonts()` method with the compile-time constant `availableFonts`.
+  * Added `ExpressiveFonts.defaultFont` constant (`ExpressiveFonts.googleSansFlex`) and adopted it as default parameter in `ExpressiveTheme`.
+
 ## 0.0.3
 
 * **Widgets & Enhancements**:

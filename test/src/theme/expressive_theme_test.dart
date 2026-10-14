@@ -4,10 +4,22 @@ import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('ExpressiveTheme', () {
+    test('defaultTheme and defaultThemeMode are ThemeMode.system', () {
+      expect(ExpressiveTheme.defaultTheme, ThemeMode.system);
+    });
+
     test('light theme builds with default parameters', () {
       final theme = ExpressiveTheme.light();
+      final expectedScheme = ColorScheme.fromSeed(
+        seedColor: ExpressiveColors.defaultColor,
+      );
       expect(theme.brightness, Brightness.light);
       expect(theme.useMaterial3, isTrue);
+      expect(theme.colorScheme.primary, expectedScheme.primary);
+      expect(
+        theme.textTheme.bodyMedium?.fontFamily,
+        ExpressiveFonts.defaultFont,
+      );
       expect(theme.appBarTheme.centerTitle, isTrue);
       expect(theme.snackBarTheme.behavior, SnackBarBehavior.floating);
     });
@@ -24,8 +36,17 @@ void main() {
 
     test('dark theme builds with default parameters', () {
       final theme = ExpressiveTheme.dark();
+      final expectedScheme = ColorScheme.fromSeed(
+        seedColor: ExpressiveColors.defaultColor,
+        brightness: Brightness.dark,
+      );
       expect(theme.brightness, Brightness.dark);
       expect(theme.useMaterial3, isTrue);
+      expect(theme.colorScheme.primary, expectedScheme.primary);
+      expect(
+        theme.textTheme.bodyMedium?.fontFamily,
+        ExpressiveFonts.defaultFont,
+      );
       expect(theme.appBarTheme.centerTitle, isTrue);
     });
 

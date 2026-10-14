@@ -3,10 +3,13 @@ import 'package:material_ui/material_ui.dart';
 
 /// Configuración de temas Material 3 Expressive para [expressive_kit].
 abstract final class ExpressiveTheme {
+  /// Modo de tema predeterminado.
+  static const ThemeMode defaultTheme = ThemeMode.system;
+
   /// Genera el [ThemeData] para el modo claro.
   static ThemeData light({
-    Color baseColor = Colors.blue,
-    String fontFamily = ExpressiveFonts.googleSansFlex,
+    Color baseColor = ExpressiveColors.defaultColor,
+    String fontFamily = ExpressiveFonts.defaultFont,
   }) {
     final colorScheme = ColorScheme.fromSeed(seedColor: baseColor);
 
@@ -19,8 +22,8 @@ abstract final class ExpressiveTheme {
 
   /// Genera el [ThemeData] para el modo oscuro.
   static ThemeData dark({
-    Color baseColor = Colors.blue,
-    String fontFamily = ExpressiveFonts.googleSansFlex,
+    Color baseColor = ExpressiveColors.defaultColor,
+    String fontFamily = ExpressiveFonts.defaultFont,
   }) {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: baseColor,

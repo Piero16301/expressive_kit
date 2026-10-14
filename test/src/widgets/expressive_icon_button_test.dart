@@ -1,6 +1,6 @@
 import 'package:expressive_kit/src/widgets/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('ExpressiveIconButton', () {

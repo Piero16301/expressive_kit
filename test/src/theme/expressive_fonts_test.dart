@@ -26,10 +26,11 @@ void main() {
         ExpressiveFonts.sourceCodePro,
         'packages/expressive_kit/SourceCodePro',
       );
+      expect(ExpressiveFonts.defaultFont, ExpressiveFonts.googleSansFlex);
     });
 
-    test('getAvailableFonts returns map of all 9 fonts', () {
-      final fonts = ExpressiveFonts.getAvailableFonts();
+    test('availableFonts contains all 9 fonts with correct families', () {
+      final fonts = ExpressiveFonts.availableFonts;
       expect(fonts.length, 9);
       expect(fonts['Google Sans Flex'], ExpressiveFonts.googleSansFlex);
       expect(fonts['Merriweather'], ExpressiveFonts.merriweather);
@@ -40,14 +41,6 @@ void main() {
       expect(fonts['Playfair Display'], ExpressiveFonts.playfairDisplay);
       expect(fonts['Roboto'], ExpressiveFonts.roboto);
       expect(fonts['Source Code Pro'], ExpressiveFonts.sourceCodePro);
-    });
-
-    test('availableFonts static map contains expected entries', () {
-      expect(ExpressiveFonts.availableFonts.length, 9);
-      expect(
-        ExpressiveFonts.availableFonts,
-        equals(ExpressiveFonts.getAvailableFonts()),
-      );
     });
   });
 }

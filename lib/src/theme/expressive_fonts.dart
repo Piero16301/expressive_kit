@@ -14,21 +14,19 @@ abstract final class ExpressiveFonts {
   static const String roboto = 'packages/$packageName/Roboto';
   static const String sourceCodePro = 'packages/$packageName/SourceCodePro';
 
-  /// Retorna el mapa con los nombres legibles y sus identificadores de familia listos para Flutter.
-  static Map<String, String> getAvailableFonts() {
-    return {
-      'Google Sans Flex': googleSansFlex,
-      'Merriweather': merriweather,
-      'Montserrat': montserrat,
-      'Nunito': nunito,
-      'Open Sans': openSans,
-      'Orbitron': orbitron,
-      'Playfair Display': playfairDisplay,
-      'Roboto': roboto,
-      'Source Code Pro': sourceCodePro,
-    };
-  }
+  /// Tipografía base predeterminada.
+  static const String defaultFont = googleSansFlex;
 
-  /// Mapa estático de acceso rápido.
-  static final Map<String, String> availableFonts = getAvailableFonts();
+  /// Mapa de fuentes disponibles con nombres legibles e identificadores de familia listos para Flutter.
+  static const Map<String, String> availableFonts = <String, String>{
+    'Google Sans Flex': googleSansFlex,
+    'Merriweather': merriweather,
+    'Montserrat': montserrat,
+    'Nunito': nunito,
+    'Open Sans': openSans,
+    'Orbitron': orbitron,
+    'Playfair Display': playfairDisplay,
+    'Roboto': roboto,
+    'Source Code Pro': sourceCodePro,
+  };
 }

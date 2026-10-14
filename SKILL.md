@@ -45,7 +45,7 @@ dependencies:
 Replace standard `ThemeData` inside `MaterialApp`:
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:expressive_kit/expressive_kit.dart';
 
 void main() {
@@ -62,14 +62,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expressive App',
       theme: ExpressiveTheme.light(
-        baseColor: primaryColor,
-        fontFamily: ExpressiveFonts.googleSansFlex,
+        baseColor: ExpressiveColors.defaultColor,
+        fontFamily: ExpressiveFonts.defaultFont,
       ),
       darkTheme: ExpressiveTheme.dark(
-        baseColor: primaryColor,
-        fontFamily: ExpressiveFonts.googleSansFlex,
+        baseColor: ExpressiveColors.defaultColor,
+        fontFamily: ExpressiveFonts.defaultFont,
       ),
-      themeMode: ThemeMode.system,
+      themeMode: ExpressiveTheme.defaultTheme,
+      localizationsDelegates: ExpressiveLocalizations.localizationsDelegates,
+      supportedLocales: ExpressiveLocalizations.supportedLocales,
       home: const HomeScreen(),
     );
   }
@@ -81,15 +83,20 @@ The package includes 9 bundled variable font families ready to use without exter
 
 | Constant | Font Name | Best For |
 | :--- | :--- | :--- |
-| `ExpressiveFonts.googleSansFlex` | Google Sans Flex | Modern, clean UI & headings (Default) |
+| `ExpressiveFonts.googleSansFlex` | Google Sans Flex | Modern, clean UI & headings (`defaultFont`) |
+| `ExpressiveFonts.merriweather` | Merriweather | Serif • Editorial reading |
 | `ExpressiveFonts.montserrat` | Montserrat | Geometric, punchy branding & cards |
-| `ExpressiveFonts.roboto` | Roboto | Standard, readable body copy |
-| `ExpressiveFonts.robotoFlex` | Roboto Flex | Flexible adaptive weights |
-| `ExpressiveFonts.openSans` | Open Sans | High legibility on mobile |
+| `ExpressiveFonts.nunito` | Nunito | Rounded sans • Friendly & playful |
+| `ExpressiveFonts.openSans` | Open Sans | Humanist sans • Neutral mobile UI |
 | `ExpressiveFonts.orbitron` | Orbitron | Futuristic, tech, crypto, numbers |
-| `ExpressiveFonts.poppins` | Poppins | Friendly, rounded modern UI |
-| `ExpressiveFonts.inter` | Inter | Enterprise, dashboards, compact data |
-| `ExpressiveFonts.lato` | Lato | Warm, editorial reading |
+| `ExpressiveFonts.playfairDisplay` | Playfair Display | High-contrast classical serif |
+| `ExpressiveFonts.roboto` | Roboto | Neo-grotesque sans • Standard copy |
+| `ExpressiveFonts.sourceCodePro` | Source Code Pro | Monospace • Code & terminals |
+
+To inspect all available fonts:
+```dart
+final allFonts = ExpressiveFonts.availableFonts; // static const Map<String, String>
+```
 
 To apply to individual text styles:
 ```dart
@@ -99,7 +106,30 @@ Text(
     fontFamily: ExpressiveFonts.orbitron,
     fontWeight: FontWeight.bold,
   ),
-)
+);
+```
+
+### 2.3 Color Palette & Helpers (`ExpressiveColors`)
+Dynamic color palette with standard keys and color-matching:
+
+```dart
+// Predefined default color
+final defaultColor = ExpressiveColors.defaultColor; // Colors.teal
+
+// Lookup color by key or get key from Color
+final redColor = ExpressiveColors.fromKey('RED');
+final colorKey = ExpressiveColors.toKey(Colors.teal); // 'TEAL'
+final palette = ExpressiveColors.palette; // 19 curated colors
+```
+
+### 2.4 Built-in Localization (`ExpressiveLocalizations`)
+Ready-to-use localizations across 6 locales (`en`, `es`, `it`, `de`, `fr`, `pt`):
+
+```dart
+// Context extensions via ExpressiveLocalizationExtensions
+final themeLabel = ThemeMode.system.localizedName(context);       // e.g. "Sistema" / "System"
+final localeLabel = const Locale('it').localizedName(context);    // e.g. "Italiano" / "Italian"
+final colorLabel = Colors.teal.localizedName(context);            // e.g. "Turquesa" / "Teal"
 ```
 
 ---
