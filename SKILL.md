@@ -132,6 +132,25 @@ final localeLabel = const Locale('it').localizedName(context);    // e.g. "Itali
 final colorLabel = Colors.teal.localizedName(context);            // e.g. "Turquesa" / "Teal"
 ```
 
+### 2.5 Supported Locales & Utilities (`ExpressiveLanguages`)
+Predefined locale constants and utilities:
+
+```dart
+// Predefined default locale (English)
+final defaultLocale = ExpressiveLanguages.defaultLocale; // Locale('en', 'US')
+
+// Supported locales list ready for MaterialApp
+final locales = ExpressiveLanguages.supportedLocales;
+// [ Locale('en', 'US'), Locale('es', 'ES'), Locale('it', 'IT'), ... ]
+
+// Individual constants
+const english = ExpressiveLanguages.english;
+const spanish = ExpressiveLanguages.spanish;
+
+// Resolve from language code
+final resolved = ExpressiveLanguages.fromLanguageCode('es'); // Locale('es', 'ES')
+```
+
 ---
 
 ## 3. Motion & Animation Tokens (`ExpressiveMotion`)

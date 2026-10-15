@@ -1,3 +1,9 @@
+## 0.0.5
+
+* **Internationalization & Localization (i18n / l10n)**:
+  * Added `ExpressiveLanguages` (and alias `ExpressiveLocales`) providing `defaultLocale` (`Locale('en', 'US')`), predefined `supportedLocales` with language and country codes, individual language constants (`english`, `spanish`, `italian`, `german`, `french`, `portuguese`), and `fromLanguageCode()` resolver.
+  * Added dedicated unit tests for `ExpressiveLanguages` maintaining **100.0% line coverage** across all library source files.
+
 ## 0.0.4
 
 * **Internationalization & Localization (i18n / l10n)**:

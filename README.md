@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.4
+  expressive_kit: ^0.0.5
   hugeicons: ^1.2.0
 ```
 
@@ -554,6 +554,21 @@ Provides localized labels for themes, colors, and languages across 6 locales: En
 final themeName = ThemeMode.system.localizedName(context);       // e.g. "Sistema" / "System"
 final languageName = const Locale('it').localizedName(context);  // e.g. "Italiano" / "Italian"
 final colorName = Colors.teal.localizedName(context);            // e.g. "Turquesa" / "Teal"
+```
+
+#### • ExpressiveLanguages
+Standardized supported locales and language utilities:
+
+```dart
+// Default locale
+final defaultLocale = ExpressiveLanguages.defaultLocale; // Locale('en', 'US')
+
+// Predefined supported locales list ready for MaterialApp
+final locales = ExpressiveLanguages.supportedLocales;
+// [ Locale('en', 'US'), Locale('es', 'ES'), Locale('it', 'IT'), ... ]
+
+// Resolve locale from code
+final locale = ExpressiveLanguages.fromLanguageCode('es'); // Locale('es', 'ES')
 ```
 
 ---
