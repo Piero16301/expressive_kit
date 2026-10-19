@@ -145,5 +145,14 @@ void main() {
         ),
       );
     });
+
+    test('ThemeMode.key and Color.key return standardized uppercase keys', () {
+      expect(ThemeMode.light.key, 'LIGHT');
+      expect(ThemeMode.dark.key, 'DARK');
+      expect(ThemeMode.system.key, 'SYSTEM');
+
+      expect(Colors.teal.key, 'TEAL');
+      expect(Colors.red.key, 'RED');
+    });
   });
 }

@@ -1,3 +1,11 @@
+## 0.0.6
+
+* **Theme Persistence & Helpers**:
+  * Added `ExpressiveTheme.fromKey()` and `ExpressiveTheme.toKey()` for serializing and deserializing `ThemeMode` to/from string keys (`'LIGHT'`, `'DARK'`, `'SYSTEM'`) for local storage (SharedPreferences, Hive, SQLite).
+  * Added convenience aliases `ExpressiveTheme.getThemeByName()` and `ExpressiveTheme.getThemeName()`.
+  * Added `ThemeHelper` class (and alias `ExpressiveThemeHelper`) providing standardized methods `getThemeName()`, `getThemeByName()`, `fromKey()`, and `toKey()`.
+  * Added `.key` getter on `ThemeMode` (`ExpressiveThemeModeX`) and `Color` (`ExpressiveColorX`) for direct key lookup.
+
 ## 0.0.5
 
 * **Internationalization & Localization (i18n / l10n)**:

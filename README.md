@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.5
+  expressive_kit: ^0.0.6
   hugeicons: ^1.2.0
 ```
 
@@ -569,6 +569,24 @@ final locales = ExpressiveLanguages.supportedLocales;
 
 // Resolve locale from code
 final locale = ExpressiveLanguages.fromLanguageCode('es'); // Locale('es', 'ES')
+```
+
+#### • Theme Persistence (`ExpressiveTheme` / `ThemeHelper`)
+Standardized serialization and deserialization for saving user theme selection to local storage (e.g. `SharedPreferences`, `Hive`):
+
+```dart
+// Serialize to store in local storage ('LIGHT', 'DARK', 'SYSTEM')
+final key = ExpressiveTheme.toKey(ThemeMode.dark); // 'DARK'
+
+// Direct extension getter
+final themeKey = ThemeMode.system.key; // 'SYSTEM'
+
+// Deserialize from stored string
+final theme = ExpressiveTheme.fromKey(savedKey); // ThemeMode (fallback: defaultTheme)
+
+// Compatibility helpers & ThemeHelper alias
+final name = ThemeHelper.getThemeName(themeMode); // 'LIGHT' | 'DARK' | 'SYSTEM'
+final loadedTheme = ThemeHelper.getThemeByName(storedKey, fallback: ThemeMode.light);
 ```
 
 ---

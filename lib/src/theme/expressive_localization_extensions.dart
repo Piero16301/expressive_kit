@@ -2,8 +2,12 @@ import 'package:material_ui/material_ui.dart';
 
 import '../l10n/generated/expressive_localizations.dart';
 import 'expressive_colors.dart';
+import 'expressive_theme.dart';
 
 extension ExpressiveThemeModeX on ThemeMode {
+  /// Clave identificadora estandarizada ('LIGHT', 'DARK', 'SYSTEM') para almacenamiento local.
+  String get key => ExpressiveTheme.toKey(this);
+
   /// Retorna el nombre traducido del modo de tema.
   String localizedName(BuildContext context) {
     final l10n = ExpressiveLocalizations.of(context);
@@ -32,9 +36,12 @@ extension ExpressiveLocaleX on Locale {
 }
 
 extension ExpressiveColorX on Color {
+  /// Clave identificadora estandarizada del color (e.g. 'TEAL', 'RED').
+  String get key => ExpressiveColors.toKey(this);
+
   /// Retorna el nombre traducido del color.
   String localizedName(BuildContext context) {
-    final key = ExpressiveColors.toKey(this);
+    final key = this.key;
     final l10n = ExpressiveLocalizations.of(context);
     if (l10n == null) return key;
 

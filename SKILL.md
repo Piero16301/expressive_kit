@@ -151,6 +151,22 @@ const spanish = ExpressiveLanguages.spanish;
 final resolved = ExpressiveLanguages.fromLanguageCode('es'); // Locale('es', 'ES')
 ```
 
+### 2.6 Theme Persistence & Helpers (`ExpressiveTheme` / `ThemeHelper`)
+Standardized conversion for saving and restoring `ThemeMode` in local storage (`SharedPreferences`, `Hive`, `HydratedBloc`, etc.):
+
+```dart
+// Serialize to String key ('LIGHT', 'DARK', 'SYSTEM')
+final key = ExpressiveTheme.toKey(ThemeMode.dark); // 'DARK'
+final directKey = ThemeMode.system.key;            // 'SYSTEM' (extension getter)
+
+// Deserialize from String key
+final theme = ExpressiveTheme.fromKey(savedKey);   // ThemeMode (fallback: defaultTheme)
+
+// Compatibility helpers (ThemeHelper / ExpressiveThemeHelper)
+final name = ThemeHelper.getThemeName(themeMode);
+final mode = ThemeHelper.getThemeByName(name, fallback: ThemeMode.light);
+```
+
 ---
 
 ## 3. Motion & Animation Tokens (`ExpressiveMotion`)
