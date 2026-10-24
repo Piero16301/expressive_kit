@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.0.2
+  expressive_kit: ^0.0.7
   hugeicons: ^1.2.0
 ```
 
@@ -165,6 +165,41 @@ final theme = ExpressiveTheme.fromKey(savedKey);   // ThemeMode (fallback: defau
 // Compatibility helpers (ThemeHelper / ExpressiveThemeHelper)
 final name = ThemeHelper.getThemeName(themeMode);
 final mode = ThemeHelper.getThemeByName(name, fallback: ThemeMode.light);
+```
+
+### 2.7 Cross-Cutting Models (`AppDeviceInfo`, `AppPackageInfo`)
+Standardized immutable models built with `Equatable` for application telemetry, analytics, and metadata:
+
+```dart
+// Device information model
+final deviceInfo = AppDeviceInfo(
+  id: 'device_01',
+  model: 'Pixel 9 Pro',
+  brand: 'Google',
+  versionRelease: '14',
+  sdkInt: 34,
+  processor: 'Tensor G4',
+  physicalRamSize: 17179869184,
+  availableRamSize: 8589934592,
+  isLowRamDevice: false,
+  isPhysicalDevice: true,
+);
+
+final deviceJson = deviceInfo.toJson();
+final restoredDevice = AppDeviceInfo.fromJson(deviceJson);
+final updatedDevice = deviceInfo.copyWith(isLowRamDevice: true);
+
+// Package information model
+final packageInfo = AppPackageInfo(
+  appName: 'Expressive Showcase',
+  version: '1.0.0',
+  buildNumber: '1',
+  updateTime: DateTime.now(),
+);
+
+final packageJson = packageInfo.toJson(); // updateTime formatted as ISO 8601 UTC
+final restoredPackage = AppPackageInfo.fromJson(packageJson);
+final updatedPackage = packageInfo.copyWith(version: '1.0.1');
 ```
 
 ---

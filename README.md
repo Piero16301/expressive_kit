@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.6
+  expressive_kit: ^0.0.7
   hugeicons: ^1.2.0
 ```
 
@@ -587,6 +587,52 @@ final theme = ExpressiveTheme.fromKey(savedKey); // ThemeMode (fallback: default
 // Compatibility helpers & ThemeHelper alias
 final name = ThemeHelper.getThemeName(themeMode); // 'LIGHT' | 'DARK' | 'SYSTEM'
 final loadedTheme = ThemeHelper.getThemeByName(storedKey, fallback: ThemeMode.light);
+```
+
+---
+
+### 7. Cross-Cutting Models
+
+Unified, immutable data models built with `Equatable` for sharing device and package metadata across your Flutter ecosystem:
+
+#### • AppDeviceInfo
+Captures hardware and platform specifications (ID, brand, model, Android SDK/release, RAM capacities, low-RAM flags, and processor):
+
+```dart
+final deviceInfo = AppDeviceInfo(
+  id: 'device_01',
+  model: 'Pixel 9 Pro',
+  brand: 'Google',
+  versionRelease: '14',
+  sdkInt: 34,
+  processor: 'Tensor G4',
+  physicalRamSize: 17179869184,
+  availableRamSize: 8589934592,
+  isLowRamDevice: false,
+  isPhysicalDevice: true,
+);
+
+// Serialization and copying
+final json = deviceInfo.toJson();
+final restored = AppDeviceInfo.fromJson(json);
+final modified = deviceInfo.copyWith(isLowRamDevice: true);
+```
+
+#### • AppPackageInfo
+Encapsulates runtime application package metadata with UTC ISO 8601 timestamps:
+
+```dart
+final packageInfo = AppPackageInfo(
+  appName: 'My App',
+  version: '1.0.0',
+  buildNumber: '1',
+  updateTime: DateTime.now(),
+);
+
+// Serialization and copying
+final json = packageInfo.toJson(); // updateTime formatted as ISO 8601 UTC
+final restored = AppPackageInfo.fromJson(json);
+final modified = packageInfo.copyWith(version: '1.0.1');
 ```
 
 ---

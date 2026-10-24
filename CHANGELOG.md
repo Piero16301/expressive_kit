@@ -1,3 +1,11 @@
+## 0.0.7
+
+* **Models & Cross-Cutting Properties**:
+  * Added `AppDeviceInfo` model supporting device hardware, OS version release, SDK API level, processor, physical and available RAM sizes, and low-RAM flags with `toJson()`, `fromJson()`, `copyWith()`, and value equality via `Equatable`.
+  * Added `AppPackageInfo` model supporting application name, semantic version, build number, and update time (ISO 8601 UTC) with `toJson()`, `fromJson()`, `copyWith()`, and value equality via `Equatable`.
+  * Exported models directly via `package:expressive_kit/expressive_kit.dart`.
+  * Added comprehensive unit test suites maintaining **100.0% line coverage** across all library source files.
+
 ## 0.0.6
 
 * **Theme Persistence & Helpers**:
