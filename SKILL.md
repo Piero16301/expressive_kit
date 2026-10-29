@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.0.7
+  expressive_kit: ^0.0.8
   hugeicons: ^1.2.0
 ```
 
@@ -402,7 +402,7 @@ ExpressiveTopAppBar(
 ```
 
 #### • `ExpressiveNavigationBar`
-Bottom navigation bar featuring animated pill indicators:
+Bottom navigation bar featuring animated pill indicators and cross-platform safe area spacing consistency (preserving equal vertical alignment across desktop and mobile):
 
 ```dart
 ExpressiveNavigationBar(

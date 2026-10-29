@@ -1,3 +1,10 @@
+## 0.0.8
+
+* **Widgets & Layout Precision**:
+  * Fixed indicator pill vertical spacing in `ExpressiveNavigationBar` on mobile platforms (Android, iOS) by scoping the `height` constraint inside `SafeArea`.
+  * Preserved uniform, centered vertical alignment and consistent spacing between the active indicator pill and the top boundary of the navigation bar across all desktop (macOS, Windows, Linux) and mobile devices regardless of system gesture bar or home indicator insets.
+  * Added unit and widget regression tests verifying cross-platform safe area bottom padding and indicator distance consistency.
+
 ## 0.0.7
 
 * **Models & Cross-Cutting Properties**:

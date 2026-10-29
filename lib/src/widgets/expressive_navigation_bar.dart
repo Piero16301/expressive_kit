@@ -49,139 +49,141 @@ class ExpressiveNavigationBar extends StatelessWidget {
     final activeIndicator = indicatorColor ?? colorScheme.secondaryContainer;
 
     return Container(
-      height: height,
       color: bg,
       child: SafeArea(
         top: false,
-        child: Row(
-          children: List.generate(destinations.length, (index) {
-            final destination = destinations[index];
-            final isSelected = index == selectedIndex;
+        child: SizedBox(
+          height: height,
+          child: Row(
+            children: List.generate(destinations.length, (index) {
+              final destination = destinations[index];
+              final isSelected = index == selectedIndex;
 
-            final targetIconColor = isSelected
-                ? colorScheme.onSecondaryContainer
-                : colorScheme.onSurfaceVariant;
+              final targetIconColor = isSelected
+                  ? colorScheme.onSecondaryContainer
+                  : colorScheme.onSurfaceVariant;
 
-            final baseIcon = destination.selectedIcon != null
-                ? AnimatedSwitcher(
-                    duration: ExpressiveMotion.durationShort,
-                    switchInCurve: Curves.easeOutCubic,
-                    switchOutCurve: Curves.easeInCubic,
-                    child: KeyedSubtree(
-                      key: ValueKey(isSelected),
-                      child: isSelected
-                          ? destination.selectedIcon!
-                          : destination.icon,
-                    ),
-                  )
-                : destination.icon;
-
-            Widget iconWidget = TweenAnimationBuilder<Color?>(
-              duration: ExpressiveMotion.durationShort,
-              curve: Curves.easeOutCubic,
-              tween: ColorTween(end: targetIconColor),
-              builder: (context, animatedColor, child) {
-                return IconTheme(
-                  data: IconThemeData(color: animatedColor, size: 24),
-                  child: child!,
-                );
-              },
-              child: baseIcon,
-            );
-
-            if (destination.showBadgeDot || destination.badgeText != null) {
-              iconWidget = Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  iconWidget,
-                  Positioned(
-                    top: -2,
-                    right: -4,
-                    child: destination.showBadgeDot
-                        ? Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: colorScheme.error,
-                              shape: BoxShape.circle,
-                            ),
-                          )
-                        : Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                              vertical: 1,
-                            ),
-                            decoration: BoxDecoration(
-                              color: colorScheme.error,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              destination.badgeText!,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onError,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                  ),
-                ],
-              );
-            }
-
-            return Expanded(
-              child: ExpressivePressable(
-                onTap: () => onDestinationSelected(index),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 64,
-                      height: 32,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          AnimatedContainer(
-                            duration: ExpressiveMotion.durationShort,
-                            curve: Curves.easeOutCubic,
-                            width: isSelected ? 64 : 0,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: activeIndicator.withValues(
-                                alpha: isSelected ? 1.0 : 0.0,
-                              ),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          Center(child: iconWidget),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    AnimatedDefaultTextStyle(
+              final baseIcon = destination.selectedIcon != null
+                  ? AnimatedSwitcher(
                       duration: ExpressiveMotion.durationShort,
-                      curve: Curves.easeOutCubic,
-                      style:
-                          theme.textTheme.labelMedium?.copyWith(
-                            fontWeight: isSelected
-                                ? FontWeight.w700
-                                : FontWeight.w500,
-                            color: isSelected
-                                ? colorScheme.onSurface
-                                : colorScheme.onSurfaceVariant,
-                          ) ??
-                          const TextStyle(),
-                      child: Text(
-                        destination.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      switchInCurve: Curves.easeOutCubic,
+                      switchOutCurve: Curves.easeInCubic,
+                      child: KeyedSubtree(
+                        key: ValueKey(isSelected),
+                        child: isSelected
+                            ? destination.selectedIcon!
+                            : destination.icon,
                       ),
+                    )
+                  : destination.icon;
+
+              Widget iconWidget = TweenAnimationBuilder<Color?>(
+                duration: ExpressiveMotion.durationShort,
+                curve: Curves.easeOutCubic,
+                tween: ColorTween(end: targetIconColor),
+                builder: (context, animatedColor, child) {
+                  return IconTheme(
+                    data: IconThemeData(color: animatedColor, size: 24),
+                    child: child!,
+                  );
+                },
+                child: baseIcon,
+              );
+
+              if (destination.showBadgeDot || destination.badgeText != null) {
+                iconWidget = Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    iconWidget,
+                    Positioned(
+                      top: -2,
+                      right: -4,
+                      child: destination.showBadgeDot
+                          ? Container(
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: colorScheme.error,
+                                shape: BoxShape.circle,
+                              ),
+                            )
+                          : Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 1,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colorScheme.error,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                destination.badgeText!,
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onError,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
+                );
+              }
+
+              return Expanded(
+                child: ExpressivePressable(
+                  onTap: () => onDestinationSelected(index),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 64,
+                        height: 32,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            AnimatedContainer(
+                              duration: ExpressiveMotion.durationShort,
+                              curve: Curves.easeOutCubic,
+                              width: isSelected ? 64 : 0,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                color: activeIndicator.withValues(
+                                  alpha: isSelected ? 1.0 : 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            Center(child: iconWidget),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      AnimatedDefaultTextStyle(
+                        duration: ExpressiveMotion.durationShort,
+                        curve: Curves.easeOutCubic,
+                        style:
+                            theme.textTheme.labelMedium?.copyWith(
+                              fontWeight: isSelected
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                              color: isSelected
+                                  ? colorScheme.onSurface
+                                  : colorScheme.onSurfaceVariant,
+                            ) ??
+                            const TextStyle(),
+                        child: Text(
+                          destination.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
       ),
     );

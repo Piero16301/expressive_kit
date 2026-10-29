@@ -64,6 +64,67 @@ void main() {
       expect(selectedIndex, 0);
     });
 
+    testWidgets(
+      'maintains consistent top spacing for indicator across safe area padding',
+      (tester) async {
+        final destinations = [
+          const ExpressiveNavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          const ExpressiveNavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ];
+
+        // 1. Without safe area padding (e.g. Desktop)
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(),
+              child: Scaffold(
+                bottomNavigationBar: ExpressiveNavigationBar(
+                  destinations: destinations,
+                  selectedIndex: 0,
+                  onDestinationSelected: (_) {},
+                ),
+              ),
+            ),
+          ),
+        );
+
+        final navBarFinder = find.byType(ExpressiveNavigationBar);
+        final navBarTopDesktop = tester.getTopLeft(navBarFinder).dy;
+        final iconTopDesktop = tester.getTopLeft(find.byIcon(Icons.home)).dy;
+        final distanceDesktop = iconTopDesktop - navBarTopDesktop;
+
+        // 2. With safe area bottom padding (e.g. Mobile Android/iOS with gesture navigation)
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(padding: EdgeInsets.only(bottom: 34)),
+              child: Scaffold(
+                bottomNavigationBar: ExpressiveNavigationBar(
+                  destinations: destinations,
+                  selectedIndex: 0,
+                  onDestinationSelected: (_) {},
+                ),
+              ),
+            ),
+          ),
+        );
+
+        final navBarTopMobile = tester.getTopLeft(navBarFinder).dy;
+        final iconTopMobile = tester.getTopLeft(find.byIcon(Icons.home)).dy;
+        final distanceMobile = iconTopMobile - navBarTopMobile;
+
+        // The distance between the top of the NavigationBar and the item indicator/icon
+        // must be identical on both desktop and mobile.
+        expect(distanceMobile, equals(distanceDesktop));
+      },
+    );
+
     test('asserts when selectedIndex is invalid', () {
       expect(
         () => ExpressiveNavigationBar(

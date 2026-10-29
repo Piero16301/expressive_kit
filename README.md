@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.7
+  expressive_kit: ^0.0.8
   hugeicons: ^1.2.0
 ```
 
@@ -427,7 +427,7 @@ ExpressiveFabMenu(
 ```
 
 #### • ExpressiveNavigationBar
-Bottom navigation bar featuring smooth pill indicator transitions, animated icons, and notification dots:
+Bottom navigation bar featuring smooth pill indicator transitions, animated icons, notification dots, and cross-platform safe area padding consistency:
 
 ```dart
 ExpressiveNavigationBar(
