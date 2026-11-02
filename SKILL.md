@@ -22,8 +22,8 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.0.8
-  hugeicons: ^1.2.0
+  expressive_kit: ^0.0.9
+  hugeicons: ^4.4.0
 ```
 
 > **CRITICAL RULE FOR ICONS**: All components in `expressive_kit` use **HugeIcons**. Never use Flutter's default `Icons.xxx` (Material Icons) inside `expressive_kit` components; always use:

@@ -32,8 +32,8 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.8
-  hugeicons: ^1.2.0
+  expressive_kit: ^0.0.9
+  hugeicons: ^4.4.0
 ```
 
 Import it in your Dart code:

@@ -13,8 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   expressive_kit:
     path: ../
-  hugeicons: ^1.2.0
-  material_ui: ^1.6.0
+  hugeicons: ^4.4.0
+  material_ui: ^1.9.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
 name: expressive_kit
 description: A modern Flutter design system providing Material 3 Expressive components, spring motions, tactile feedback, and unified theme styles.
-version: 0.0.8
+version: 0.0.9
 homepage: https://github.com/Piero16301/expressive_kit
 repository: https://github.com/Piero16301/expressive_kit
 issue_tracker: https://github.com/Piero16301/expressive_kit/issues
@@ -16,8 +16,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.3
-  hugeicons: ^1.2.0
-  material_ui: ^1.8.0
+  hugeicons: ^4.4.0
+  material_ui: ^1.9.0
 
 dev_dependencies:
   flutter_test:
