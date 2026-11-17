@@ -90,22 +90,19 @@ void main() {
       );
     });
 
-    test(
-      'fromJson handles fallback when fields or updateTime are invalid or missing',
-      () {
-        final parsed = AppPackageInfo.fromJson(const {
-          'updateTime': 'invalid-date-string',
-        });
+    test('fromJson handles fallback when fields or updateTime are invalid or missing', () {
+      final parsed = AppPackageInfo.fromJson(const {
+        'updateTime': 'invalid-date-string',
+      });
 
-        expect(parsed.appName, '');
-        expect(parsed.version, '');
-        expect(parsed.buildNumber, '');
-        expect(parsed.updateTime, isA<DateTime>());
+      expect(parsed.appName, '');
+      expect(parsed.version, '');
+      expect(parsed.buildNumber, '');
+      expect(parsed.updateTime, isA<DateTime>());
 
-        final parsedNullDate = AppPackageInfo.fromJson(const {});
-        expect(parsedNullDate.updateTime, isA<DateTime>());
-      },
-    );
+      final parsedNullDate = AppPackageInfo.fromJson(const {});
+      expect(parsedNullDate.updateTime, isA<DateTime>());
+    });
 
     test('copyWith updates specified fields and preserves others', () {
       final newTime = DateTime.utc(2026, 11, 1);

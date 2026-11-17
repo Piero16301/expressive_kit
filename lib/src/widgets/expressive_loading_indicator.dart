@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:material_ui/material_ui.dart';
 
 /// Material 3 Expressive linear progress indicator with a wavy active line
