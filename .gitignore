@@ -120,4 +120,3 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 .vscode/settings.json
 graphify-out/
-lib/src/l10n/generated/*

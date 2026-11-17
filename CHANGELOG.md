@@ -1,3 +1,8 @@
+## 0.0.11
+
+* **Localization & Packaging**:
+  * Restored tracked generated localization files under `lib/src/l10n/generated/` (with `// ignore_for_file: deprecated_member_use` headers) and removed `lib/src/l10n/generated/*` from `.gitignore` for out-of-the-box package consumption.
+
 ## 0.0.10
 
 * **Environment & Dependencies**:

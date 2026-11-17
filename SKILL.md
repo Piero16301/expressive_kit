@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.0.10
+  expressive_kit: ^0.0.11
   hugeicons: ^4.4.0
 ```
 
