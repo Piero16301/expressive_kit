@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.9
+  expressive_kit: ^0.0.10
   hugeicons: ^4.4.0
 ```
 

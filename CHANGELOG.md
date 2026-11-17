@@ -1,3 +1,12 @@
+## 0.0.10
+
+* **Environment & Dependencies**:
+  * Raised minimum Dart SDK constraint from `>=3.12.0 <4.0.0` to `>=3.14.0 <4.0.0` and Flutter constraint from `>=3.47.0` to `>=3.50.0`.
+  * Upgraded `material_ui` from `^1.9.0` to `^1.11.1`.
+* **Localization & Tooling**:
+  * Updated `l10n.yaml` `header` to include `// ignore_for_file: deprecated_member_use` on generated localization files.
+  * Excluded generated localization outputs (`lib/src/l10n/generated/*`) from version control in `.gitignore`.
+
 ## 0.0.9
 
 * **Dependencies**:
