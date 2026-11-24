@@ -20,7 +20,7 @@ A modern, cohesive Flutter design system implementing **Material 3 Expressive** 
 - 🌊 **Wavy Progress Indicators**: Sinusoidal linear and circular progress indicators for both determinate and indeterminate loading states with track spacing.
 - 🔤 **Curated Variable Fonts**: Bundled typography presets via `ExpressiveFonts` (Google Sans Flex, Montserrat, Roboto, Open Sans, Orbitron, and more).
 - 🌍 **Built-in Localization**: Out-of-the-box localizations for theme modes, colors, and languages across 6 languages (`en`, `es`, `it`, `de`, `fr`, `pt`).
-- 📱 **Interactive Controls**: Buttons with loading states, split buttons with contextual dropdowns, segmented pickers, multi-shape icon buttons, switches, and sliders.
+- 📱 **Interactive Controls**: Buttons with loading states, split buttons with contextual dropdowns, segmented pickers, multi-shape icon buttons, switches, sliders, configurable text form fields, and modal dropdown buttons.
 - 🛡️ **100% Test Coverage**: Production-ready, null-safe codebase tested with 100% unit and widget test coverage.
 - 🤖 **AI Agent Ready**: Includes a bundled [`SKILL.md`](SKILL.md) skill guide for any AI coding assistant (Cursor, Antigravity, Claude Code, Copilot) to implement components or migrate existing codebases.
 
@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.0.11
+  expressive_kit: ^0.1.0
   hugeicons: ^4.4.0
 ```
 
@@ -186,6 +186,59 @@ ExpressiveSlider(
   title: 'Sound Volume',
   subtitle: 'Media and notifications',
   onChanged: (val) => setState(() => sliderValue = val),
+)
+```
+
+#### • ExpressiveTextFormField
+Configurable Material 3 Expressive form input (`FormField<String>`) supporting `filled`, `outlined`, and `tonal` variants, rounded-corner focus morphing, `Form` validation, and built-in `HugeIcons` clear/password-toggle actions:
+
+```dart
+ExpressiveTextFormField.filled(
+  labelText: 'Email address',
+  hintText: 'alex@expressive.dev',
+  showClearButton: true,
+  prefixIcon: const HugeIcon(icon: HugeIcons.strokeRoundedMail01),
+  validator: (value) =>
+      (value == null || !value.contains('@')) ? 'Invalid email' : null,
+)
+
+ExpressiveTextFormField.outlined(
+  labelText: 'Password',
+  obscureText: true,
+  showPasswordToggle: true,
+)
+
+ExpressiveTextFormField.tonal(
+  labelText: 'Notes',
+  maxLines: 3,
+  maxLength: 120,
+)
+```
+
+#### • ExpressiveDropdownButton
+Expressive `ExpressiveCardGroup` + `ExpressiveListTile` + `ExpressiveBadge` trigger that opens a 28dp rounded `showModalBottomSheet` selector:
+
+```dart
+ExpressiveDropdownButton<String>(
+  label: 'Device group',
+  modalTitle: 'Select a group',
+  hintText: 'No group assigned',
+  value: selectedGroup,
+  items: const [
+    ExpressiveDropdownItem<String>(
+      value: 'living_room',
+      label: 'Living Room',
+      subtitle: 'Lights, TV & Speaker',
+      icon: HugeIcon(icon: HugeIcons.strokeRoundedHome01),
+    ),
+    ExpressiveDropdownItem<String>(
+      value: 'workspace',
+      label: 'Workspace',
+      subtitle: 'Desk lamp & Monitor',
+      icon: HugeIcon(icon: HugeIcons.strokeRoundedDashboardSquare01),
+    ),
+  ],
+  onChanged: (val) => setState(() => selectedGroup = val),
 )
 ```
 

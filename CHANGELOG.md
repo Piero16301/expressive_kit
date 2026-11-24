@@ -1,3 +1,15 @@
+## 0.1.0
+
+* **New Form & Selection Widgets**:
+  * Added `ExpressiveTextFormField` (extending `FormField<String>`) with `filled`, `outlined`, and `tonal` variants (plus named constructors `.filled()`, `.outlined()`, and `.tonal()`), Material 3 Expressive rounded-corner focus morphing (`ExpressiveMotion.springGentle`), built-in `Form` validation/save/reset support, optional `showClearButton` and `showPasswordToggle` actions powered by `HugeIcons`, character counters, and full color/border/padding customization.
+  * Added `ExpressiveDropdownButton<T>` and `ExpressiveDropdownItem<T>` encapsulating an `ExpressiveCardGroup` + `ExpressiveListTile` + `ExpressiveBadge` trigger that opens a 28dp rounded `showModalBottomSheet` picker with icons, subtitles, disabled states, empty state, and error display.
+* **Progress Indicators**:
+  * Fixed the 180° wrap jump in `ExpressiveCircularProgressIndicator` indeterminate mode by synchronizing periodic rotation, sweep pulse, and wave phase frequencies over integer cycles.
+  * Synchronized `ExpressiveLinearProgressIndicator` (`1389ms`) and `ExpressiveCircularProgressIndicator` (`4167ms`, 3 rotations) to the same smooth forward-moving cadence with continuous expansion/contraction and zero pauses or reversals.
+* **Example Gallery & Tests**:
+  * Modularized `example/lib/main.dart` into dedicated page files (`controls_page.dart`, `content_page.dart`, `progress_page.dart`, `navigation_page.dart`, `fonts_page.dart`) and shared `SectionHeader`, adding interactive demos for `ExpressiveTextFormField` and `ExpressiveDropdownButton`.
+  * Added comprehensive widget tests achieving **100.0% line coverage** on `expressive_text_form_field.dart` and `expressive_dropdown_button.dart`.
+
 ## 0.0.11
 
 * **Localization & Packaging**:

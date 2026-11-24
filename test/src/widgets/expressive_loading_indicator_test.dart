@@ -174,11 +174,11 @@ void main() {
 
       expect(find.byType(ExpressiveCircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(milliseconds: 200));
-      await tester.pump(const Duration(milliseconds: 600));
-      await tester.pump(const Duration(milliseconds: 1000));
-      await tester.pump(const Duration(milliseconds: 1400));
-      await tester.pump(const Duration(milliseconds: 1800));
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 1500));
+      await tester.pump(const Duration(milliseconds: 3000));
+      await tester.pump(const Duration(milliseconds: 4500));
+      await tester.pump(const Duration(milliseconds: 6000));
+      await tester.pump(const Duration(milliseconds: 6500));
     });
 
     testWidgets('switches between determinate and indeterminate dynamically', (

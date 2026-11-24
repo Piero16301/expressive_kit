@@ -73,7 +73,7 @@ class _ExpressiveLinearProgressIndicatorState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1389),
     );
     if (widget.value == null) {
       _controller.repeat();
@@ -196,8 +196,9 @@ class _LinearWavyPainter extends CustomPainter {
       // INDETERMINATE MODE
       // -----------------------------------------------------------------------
       final t = animationValue;
-      final center = size.width * (-0.15 + 1.3 * t);
-      final segLen = size.width * (0.24 + 0.20 * math.sin(math.pi * t));
+      final center = size.width * (-0.12 + 1.24 * t);
+      final segLen =
+          size.width * (0.12 + 0.30 * (0.5 - 0.5 * math.cos(2 * math.pi * t)));
       final x1 = center - segLen / 2;
       final x2 = center + segLen / 2;
 
@@ -381,7 +382,7 @@ class _ExpressiveCircularProgressIndicatorState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 4167),
     );
     if (widget.value == null) {
       _controller.repeat();
@@ -496,10 +497,14 @@ class _CircularWavyPainter extends CustomPainter {
       // -----------------------------------------------------------------------
       // INDETERMINATE MODE
       // -----------------------------------------------------------------------
+      // Every periodic term completes an integer number of full cycles over
+      // t in [0, 1] (3 rotations, 2 sweep pulses, 6 wave phase cycles) so the
+      // loop wraps seamlessly from t = 1.0 to t = 0.0 with zero jump and both
+      // endpoints always advance forward.
       final t = animationValue;
       final sweep =
-          math.pi * (0.35 + 0.45 * (0.5 + 0.5 * math.sin(2 * math.pi * t * 2)));
-      final centerAngle = -math.pi / 2 + 2 * math.pi * t * 1.5;
+          math.pi * (0.25 + 0.60 * (0.5 - 0.5 * math.cos(2 * math.pi * t * 2)));
+      final centerAngle = -math.pi / 2 + 2 * math.pi * t * 3;
       final theta1 = centerAngle - sweep / 2;
       final theta2 = centerAngle + sweep / 2;
 
@@ -517,11 +522,13 @@ class _CircularWavyPainter extends CustomPainter {
 
       // Active wavy arc from theta1 to theta2 with uniform amplitude
       final path = Path();
-      final phase = t * 4 * math.pi;
+      final phase = t * 12 * math.pi;
       const dTheta = 0.03;
       bool isFirst = true;
+      double lastTh = theta1;
 
       for (double th = theta1; th <= theta2; th += dTheta) {
+        lastTh = th;
         final r = radius + amplitude * math.sin(waveCount * th - phase);
         final x = center.dx + r * math.cos(th);
         final y = center.dy + r * math.sin(th);
@@ -531,6 +538,13 @@ class _CircularWavyPainter extends CustomPainter {
         } else {
           path.lineTo(x, y);
         }
+      }
+      if (lastTh < theta2) {
+        final r = radius + amplitude * math.sin(waveCount * theta2 - phase);
+        path.lineTo(
+          center.dx + r * math.cos(theta2),
+          center.dy + r * math.sin(theta2),
+        );
       }
       canvas.drawPath(path, activePaint);
     } else {

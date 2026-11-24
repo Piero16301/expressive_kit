@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.0.11
+  expressive_kit: ^0.1.0
   hugeicons: ^4.4.0
 ```
 
@@ -351,6 +351,59 @@ ExpressiveSearchBar(
 )
 ```
 
+#### • `ExpressiveTextFormField`
+Configurable Material 3 Expressive `FormField<String>` with `filled`, `outlined`, and `tonal` variants, focus corner morphing, `Form` validation, and built-in `HugeIcons` clear and password-toggle actions:
+
+```dart
+ExpressiveTextFormField.filled(
+  labelText: 'Email address',
+  hintText: 'alex@expressive.dev',
+  showClearButton: true,
+  prefixIcon: const HugeIcon(icon: HugeIcons.strokeRoundedMail01),
+  validator: (val) =>
+      (val == null || !val.contains('@')) ? 'Enter a valid email' : null,
+)
+
+ExpressiveTextFormField.outlined(
+  labelText: 'Password',
+  obscureText: true,
+  showPasswordToggle: true,
+)
+
+ExpressiveTextFormField.tonal(
+  labelText: 'Notes',
+  maxLines: 3,
+  maxLength: 120,
+)
+```
+
+#### • `ExpressiveDropdownButton`
+Expressive `ExpressiveCardGroup` + `ExpressiveListTile` + `ExpressiveBadge` trigger that opens a 28dp rounded `showModalBottomSheet` picker:
+
+```dart
+ExpressiveDropdownButton<String>(
+  label: 'Device group',
+  modalTitle: 'Select a group',
+  hintText: 'No group assigned',
+  value: selectedGroup,
+  items: const [
+    ExpressiveDropdownItem<String>(
+      value: 'living_room',
+      label: 'Living Room',
+      subtitle: 'Lights, TV & Speaker',
+      icon: HugeIcon(icon: HugeIcons.strokeRoundedHome01),
+    ),
+    ExpressiveDropdownItem<String>(
+      value: 'workspace',
+      label: 'Workspace',
+      subtitle: 'Desk lamp & Monitor',
+      icon: HugeIcon(icon: HugeIcons.strokeRoundedDashboardSquare01),
+    ),
+  ],
+  onChanged: (val) => setState(() => selectedGroup = val),
+)
+```
+
 ---
 
 ### 4.3 Progress & Feedback
@@ -532,6 +585,8 @@ When auditing or refactoring an existing Flutter project, use the following mapp
 | `PageView.builder` (Carousels) | `ExpressiveCarousel(...)` | Automatic neighbor peeking and M3 carousel physics |
 | `FloatingActionButton` | `ExpressiveFab(...)` or `ExpressiveFabMenu(...)` | Organic shape, spring expand menu |
 | `TextField` (search bar) | `ExpressiveSearchBar(...)` | Built-in clear button, custom icons, pill shape |
+| `TextFormField` / `TextField` | `ExpressiveTextFormField.filled(...)` / `.outlined(...)` / `.tonal(...)` | 20dp→24dp focus morphing, `Form` validation, clear & password toggle |
+| `DropdownButton` / `DropdownButtonFormField` | `ExpressiveDropdownButton<T>(...)` | `ExpressiveCardGroup` trigger + 28dp modal bottom sheet picker |
 | `ThemeData(...)` | `ExpressiveTheme.light(...)` / `.dark(...)` | Automatic M3 expressive color schemes & elevation |
 | `GoogleFonts.xxx()` | `ExpressiveFonts.xxx` | Zero-network bundled variable font assets |
 | `Icon(Icons.xxx)` | `HugeIcon(icon: HugeIcons.xxx)` | Clean, cohesive iconography across all devices |
