@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../widgets/section_header.dart';
 
-class ContentPage extends StatelessWidget {
+class ContentPage extends StatefulWidget {
   const ContentPage({
     required this.isDarkMode,
     required this.onToggleTheme,
@@ -15,6 +15,13 @@ class ContentPage extends StatelessWidget {
   final bool isDarkMode;
   final VoidCallback onToggleTheme;
   final ValueChanged<String> onShowFeedback;
+
+  @override
+  State<ContentPage> createState() => _ContentPageState();
+}
+
+class _ContentPageState extends State<ContentPage> {
+  String _syncFrequency = '15 min';
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +39,9 @@ class ContentPage extends StatelessWidget {
           trailing: ExpressiveIconButton.circle(
             icon: const HugeIcon(icon: HugeIcons.strokeRoundedMic01, size: 20),
             tooltip: 'Voice search',
-            onPressed: () => onShowFeedback('Voice search activated'),
+            onPressed: () => widget.onShowFeedback('Voice search activated'),
           ),
-          onSubmitted: (query) => onShowFeedback('Searching: "$query"'),
+          onSubmitted: (query) => widget.onShowFeedback('Searching: "$query"'),
         ),
         const SizedBox(height: 12),
         ExpressiveSearchBar(
@@ -45,7 +52,7 @@ class ContentPage extends StatelessWidget {
             icon: HugeIcons.strokeRoundedArrowRight01,
             size: 16,
           ),
-          onTap: () => onShowFeedback('Search modal opened'),
+          onTap: () => widget.onShowFeedback('Search modal opened'),
         ),
         const SizedBox(height: 24),
         const SectionHeader(
@@ -58,7 +65,7 @@ class ContentPage extends StatelessWidget {
           itemExtent: 220,
           items: [
             ExpressiveCarouselItem(
-              onTap: () => onShowFeedback('Card 1 selected'),
+              onTap: () => widget.onShowFeedback('Card 1 selected'),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -89,7 +96,7 @@ class ContentPage extends StatelessWidget {
               ),
             ),
             ExpressiveCarouselItem(
-              onTap: () => onShowFeedback('Card 2 selected'),
+              onTap: () => widget.onShowFeedback('Card 2 selected'),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -120,7 +127,7 @@ class ContentPage extends StatelessWidget {
               ),
             ),
             ExpressiveCarouselItem(
-              onTap: () => onShowFeedback('Card 3 selected'),
+              onTap: () => widget.onShowFeedback('Card 3 selected'),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -178,7 +185,7 @@ class ContentPage extends StatelessWidget {
                 icon: HugeIcons.strokeRoundedArrowRight01,
                 size: 20,
               ),
-              onTap: () => onShowFeedback('Wi-Fi settings'),
+              onTap: () => widget.onShowFeedback('Wi-Fi settings'),
             ),
             ExpressiveListTile(
               leading: const ExpressiveBadge(
@@ -196,7 +203,7 @@ class ContentPage extends StatelessWidget {
                 icon: HugeIcons.strokeRoundedArrowRight01,
                 size: 20,
               ),
-              onTap: () => onShowFeedback('Bluetooth settings'),
+              onTap: () => widget.onShowFeedback('Bluetooth settings'),
             ),
             ExpressiveListTile(
               leading: const ExpressiveBadge(
@@ -214,7 +221,7 @@ class ContentPage extends StatelessWidget {
                 icon: HugeIcons.strokeRoundedArrowRight01,
                 size: 20,
               ),
-              onTap: () => onShowFeedback('Security settings'),
+              onTap: () => widget.onShowFeedback('Security settings'),
             ),
             ExpressiveListTile(
               leading: const ExpressiveBadge(
@@ -229,10 +236,10 @@ class ContentPage extends StatelessWidget {
               title: const Text('Dark theme'),
               subtitle: const Text('Toggle visual appearance'),
               showSplitDivider: true,
-              onTap: onToggleTheme,
+              onTap: widget.onToggleTheme,
               secondaryTrailing: ExpressiveSwitch(
-                value: isDarkMode,
-                onChanged: (_) => onToggleTheme(),
+                value: widget.isDarkMode,
+                onChanged: (_) => widget.onToggleTheme(),
               ),
             ),
           ],
@@ -245,7 +252,7 @@ class ContentPage extends StatelessWidget {
         const SizedBox(height: 12),
         ExpressiveCard(
           margin: EdgeInsets.zero,
-          onTap: () => onShowFeedback('Standalone card pressed'),
+          onTap: () => widget.onShowFeedback('Standalone card pressed'),
           child: const Row(
             children: [
               ExpressiveBadge(
@@ -280,6 +287,197 @@ class ContentPage extends StatelessWidget {
               HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01, size: 20),
             ],
           ),
+        ),
+        const SizedBox(height: 24),
+        const SectionHeader(
+          title: 'Modal List Tiles (ExpressiveListTile.modal)',
+          subtitle: 'Settings rows that automatically open a 28dp rounded Expressive modal bottom sheet.',
+        ),
+        const SizedBox(height: 12),
+        ExpressiveCardGroup(
+          margin: EdgeInsets.zero,
+          children: [
+            ExpressiveListTile.modal(
+              leading: const ExpressiveBadge(
+                icon: HugeIcon(
+                  icon: HugeIcons.strokeRoundedCalendar01,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                backgroundColor: Color(0xFF00897B),
+                foregroundColor: Colors.white,
+              ),
+              title: const Text('Sync frequency'),
+              subtitle: const Text('Tap to choose interval'),
+              trailing: Text(
+                _syncFrequency,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+              modalTitle: 'Sync frequency',
+              modalItemsBuilder: (modalContext) {
+                final colorScheme = Theme.of(modalContext).colorScheme;
+                const options = [
+                  ('15 min', 'Every 15 minutes'),
+                  ('1 hr', 'Every hour'),
+                  ('Manual', 'Manual only'),
+                ];
+                return options.map((option) {
+                  final (shortLabel, fullLabel) = option;
+                  final isSelected = _syncFrequency == shortLabel;
+                  return ListTile(
+                    leading: HugeIcon(
+                      icon: HugeIcons.strokeRoundedCalendar01,
+                      color: isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
+                    ),
+                    title: Text(
+                      fullLabel,
+                      style: TextStyle(
+                        fontWeight: isSelected
+                            ? FontWeight.w700
+                            : FontWeight.w500,
+                        color: isSelected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
+                      ),
+                    ),
+                    trailing: isSelected
+                        ? HugeIcon(
+                            icon: HugeIcons.strokeRoundedCheckmarkCircle02,
+                            color: colorScheme.primary,
+                          )
+                        : null,
+                    onTap: () {
+                      setState(() => _syncFrequency = shortLabel);
+                      Navigator.pop(modalContext);
+                      widget.onShowFeedback('Sync set to $fullLabel');
+                    },
+                  );
+                }).toList();
+              },
+            ),
+            ExpressiveListTile.modal(
+              leading: const ExpressiveBadge(
+                icon: HugeIcon(
+                  icon: HugeIcons.strokeRoundedLayers01,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                backgroundColor: Color(0xFF3949AB),
+                foregroundColor: Colors.white,
+              ),
+              title: const Text('Storage overview'),
+              subtitle: const Text('Custom modal content'),
+              modalTitle: 'Storage overview',
+              modalBuilder: (modalContext) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const ExpressiveLinearProgressIndicator(value: 0.68),
+                    const SizedBox(height: 12),
+                    Text(
+                      '68% used (6.8 GB of 10 GB)',
+                      style: Theme.of(modalContext).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 16),
+                    ExpressiveButton.tonal(
+                      label: 'Close',
+                      onPressed: () => Navigator.pop(modalContext),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const SectionHeader(
+          title: 'Modal Bottom Sheet (showExpressiveModalBottomSheet)',
+          subtitle: 'Direct helper for 28dp rounded bottom sheets with itemsBuilder or custom builder.',
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            ExpressiveButton.filled(
+              label: 'Action Sheet (itemsBuilder)',
+              icon: const HugeIcon(
+                icon: HugeIcons.strokeRoundedShare01,
+                size: 18,
+              ),
+              onPressed: () => showExpressiveModalBottomSheet<void>(
+                context: context,
+                title: 'Quick actions',
+                itemsBuilder: (modalContext) => [
+                  ListTile(
+                    leading: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedShare01,
+                    ),
+                    title: const Text('Share'),
+                    onTap: () {
+                      Navigator.pop(modalContext);
+                      widget.onShowFeedback('Action: Share');
+                    },
+                  ),
+                  ListTile(
+                    leading: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedBookmark02,
+                    ),
+                    title: const Text('Bookmark'),
+                    onTap: () {
+                      Navigator.pop(modalContext);
+                      widget.onShowFeedback('Action: Bookmark');
+                    },
+                  ),
+                  ListTile(
+                    leading: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedCheckmarkCircle01,
+                    ),
+                    title: const Text('Archive'),
+                    onTap: () {
+                      Navigator.pop(modalContext);
+                      widget.onShowFeedback('Action: Archive');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ExpressiveButton.tonal(
+              label: 'Custom Sheet (builder)',
+              icon: const HugeIcon(
+                icon: HugeIcons.strokeRoundedPaintBoard,
+                size: 18,
+              ),
+              onPressed: () => showExpressiveModalBottomSheet<void>(
+                context: context,
+                title: 'Expressive Bottom Sheet',
+                builder: (modalContext) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'This sheet is rendered directly with showExpressiveModalBottomSheet using a custom builder.',
+                        style: Theme.of(modalContext).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      ExpressiveButton.filled(
+                        label: 'Got it',
+                        onPressed: () => Navigator.pop(modalContext),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 80),
       ],

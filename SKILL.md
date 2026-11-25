@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.1.0
+  expressive_kit: ^0.1.1
   hugeicons: ^4.4.0
 ```
 
@@ -493,6 +493,48 @@ ExpressiveListTile(
 )
 ```
 
+Use `ExpressiveListTile.modal` inside `ExpressiveCardGroup` when tapping a row should open a 28dp rounded `showExpressiveModalBottomSheet` (renders an automatic trailing chevron alongside an optional `trailing` widget):
+
+```dart
+ExpressiveCardGroup(
+  children: [
+    ExpressiveListTile.modal(
+      title: const Text('Sync frequency'),
+      subtitle: const Text('Tap to choose interval'),
+      trailing: Text(syncFrequency),
+      modalTitle: 'Sync frequency',
+      modalItemsBuilder: (modalContext) => [
+        ListTile(
+          title: const Text('Every 15 minutes'),
+          onTap: () => Navigator.pop(modalContext),
+        ),
+        ListTile(
+          title: const Text('Every hour'),
+          onTap: () => Navigator.pop(modalContext),
+        ),
+      ],
+    ),
+  ],
+)
+```
+
+#### • `showExpressiveModalBottomSheet`
+Reusable 28dp rounded Material 3 Expressive bottom sheet helper with optional drag handle, centered title, `maxHeightFraction`, `SafeArea`, and automatic scrolling (`itemsBuilder` or custom `builder`):
+
+```dart
+showExpressiveModalBottomSheet<void>(
+  context: context,
+  title: 'Quick actions',
+  itemsBuilder: (modalContext) => [
+    ListTile(
+      leading: const HugeIcon(icon: HugeIcons.strokeRoundedShare01),
+      title: const Text('Share'),
+      onTap: () => Navigator.pop(modalContext),
+    ),
+  ],
+);
+```
+
 #### • `ExpressiveCardGroup`
 Curved card container with outer boundary isolation and divided inner rows:
 
@@ -587,6 +629,7 @@ When auditing or refactoring an existing Flutter project, use the following mapp
 | `TextField` (search bar) | `ExpressiveSearchBar(...)` | Built-in clear button, custom icons, pill shape |
 | `TextFormField` / `TextField` | `ExpressiveTextFormField.filled(...)` / `.outlined(...)` / `.tonal(...)` | 20dp→24dp focus morphing, `Form` validation, clear & password toggle |
 | `DropdownButton` / `DropdownButtonFormField` | `ExpressiveDropdownButton<T>(...)` | `ExpressiveCardGroup` trigger + 28dp modal bottom sheet picker |
+| `showModalBottomSheet(...)` | `showExpressiveModalBottomSheet(...)` / `ExpressiveListTile.modal(...)` | 28dp rounded top corners, drag handle, `SafeArea`, auto-scroll, and one-line list tile modal trigger |
 | `ThemeData(...)` | `ExpressiveTheme.light(...)` / `.dark(...)` | Automatic M3 expressive color schemes & elevation |
 | `GoogleFonts.xxx()` | `ExpressiveFonts.xxx` | Zero-network bundled variable font assets |
 | `Icon(Icons.xxx)` | `HugeIcon(icon: HugeIcons.xxx)` | Clean, cohesive iconography across all devices |

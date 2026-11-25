@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.1.0
+  expressive_kit: ^0.1.1
   hugeicons: ^4.4.0
 ```
 
@@ -329,6 +329,48 @@ ExpressiveCardGroup(
     ),
   ],
 )
+```
+
+#### • ExpressiveListTile.modal
+Settings row that automatically opens a 28dp rounded `showExpressiveModalBottomSheet` on tap, with an automatic trailing chevron (`showChevron: true`) combinable with custom `trailing` widgets:
+
+```dart
+ExpressiveListTile.modal(
+  leading: const ExpressiveBadge(
+    icon: HugeIcon(icon: HugeIcons.strokeRoundedCalendar01, color: Colors.white),
+  ),
+  title: const Text('Sync frequency'),
+  subtitle: const Text('Tap to choose interval'),
+  trailing: Text(syncFrequency),
+  modalTitle: 'Sync frequency',
+  modalItemsBuilder: (modalContext) => [
+    ListTile(
+      title: const Text('Every 15 minutes'),
+      onTap: () => Navigator.pop(modalContext),
+    ),
+    ListTile(
+      title: const Text('Every hour'),
+      onTap: () => Navigator.pop(modalContext),
+    ),
+  ],
+)
+```
+
+#### • showExpressiveModalBottomSheet
+Direct helper for 28dp rounded Material 3 Expressive bottom sheets supporting either `itemsBuilder` or a custom `builder`:
+
+```dart
+showExpressiveModalBottomSheet<void>(
+  context: context,
+  title: 'Quick actions',
+  itemsBuilder: (modalContext) => [
+    ListTile(
+      leading: const HugeIcon(icon: HugeIcons.strokeRoundedShare01),
+      title: const Text('Share'),
+      onTap: () => Navigator.pop(modalContext),
+    ),
+  ],
+);
 ```
 
 #### • ExpressiveCard

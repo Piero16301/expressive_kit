@@ -31,8 +31,8 @@ class ExpressiveDropdownItem<T> {
 }
 
 /// Selector desplegable de Material 3 Expressive basado en [ExpressiveCardGroup]
-/// y [ExpressiveListTile] que abre un `showModalBottomSheet` redondeado de 28dp
-/// para elegir entre [items].
+/// y [ExpressiveListTile] que abre un [showExpressiveModalBottomSheet]
+/// redondeado de 28dp para elegir entre [items].
 class ExpressiveDropdownButton<T> extends StatelessWidget {
   const ExpressiveDropdownButton({
     required this.label,
@@ -146,138 +146,78 @@ class ExpressiveDropdownButton<T> extends StatelessWidget {
   Future<void> _showPickerModal(BuildContext context) async {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final maxHeight = MediaQuery.sizeOf(context).height * maxHeightFraction;
 
-    await showModalBottomSheet<void>(
+    await showExpressiveModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: modalBackgroundColor ?? colorScheme.surfaceContainer,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-      ),
-      builder: (modalContext) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: maxHeight),
-          child: SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (showDragHandle) ...[
-                    Container(
-                      width: 36,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: colorScheme.onSurfaceVariant.withValues(
-                          alpha: 0.4,
-                        ),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      modalTitle ?? label,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+      title: modalTitle ?? label,
+      showDragHandle: showDragHandle,
+      maxHeightFraction: maxHeightFraction,
+      backgroundColor: modalBackgroundColor,
+      builder: items.isEmpty
+          ? (modalContext) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Text(
+                emptyText ?? hintText ?? '',
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+            )
+          : null,
+      itemsBuilder: items.isEmpty
+          ? null
+          : (modalContext) => items.map((item) {
+              final isSelected = value == item.value;
+              final itemIconColor = !item.enabled
+                  ? colorScheme.onSurface.withValues(alpha: 0.38)
+                  : isSelected
+                  ? colorScheme.primary
+                  : colorScheme.onSurfaceVariant;
+
+              return ListTile(
+                enabled: item.enabled,
+                leading: item.icon != null
+                    ? IconTheme(
+                        data: IconThemeData(color: itemIconColor, size: 24),
+                        child: item.icon!,
+                      )
+                    : null,
+                title: Text(
+                  item.label,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                    color: !item.enabled
+                        ? colorScheme.onSurface.withValues(alpha: 0.38)
+                        : isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onSurface,
                   ),
-                  const SizedBox(height: 16),
-                  if (items.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 16,
-                      ),
-                      child: Text(
-                        emptyText ?? hintText ?? '',
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium?.copyWith(
+                ),
+                subtitle: item.subtitle != null
+                    ? Text(
+                        item.subtitle!,
+                        style: theme.textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
-                      ),
-                    )
-                  else
-                    Flexible(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: items.map((item) {
-                            final isSelected = value == item.value;
-                            final itemIconColor = !item.enabled
-                                ? colorScheme.onSurface.withValues(alpha: 0.38)
-                                : isSelected
-                                ? colorScheme.primary
-                                : colorScheme.onSurfaceVariant;
-
-                            return ListTile(
-                              enabled: item.enabled,
-                              leading: item.icon != null
-                                  ? IconTheme(
-                                      data: IconThemeData(
-                                        color: itemIconColor,
-                                        size: 24,
-                                      ),
-                                      child: item.icon!,
-                                    )
-                                  : null,
-                              title: Text(
-                                item.label,
-                                style: theme.textTheme.bodyLarge?.copyWith(
-                                  fontWeight: isSelected
-                                      ? FontWeight.w700
-                                      : FontWeight.w500,
-                                  color: !item.enabled
-                                      ? colorScheme.onSurface.withValues(
-                                          alpha: 0.38,
-                                        )
-                                      : isSelected
-                                      ? colorScheme.primary
-                                      : colorScheme.onSurface,
-                                ),
-                              ),
-                              subtitle: item.subtitle != null
-                                  ? Text(
-                                      item.subtitle!,
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                            color: colorScheme.onSurfaceVariant,
-                                          ),
-                                    )
-                                  : null,
-                              trailing: isSelected
-                                  ? (selectedIcon ??
-                                        HugeIcon(
-                                          icon: HugeIcons
-                                              .strokeRoundedCheckmarkCircle02,
-                                          color: colorScheme.primary,
-                                          strokeWidth: 2,
-                                        ))
-                                  : null,
-                              onTap: item.enabled
-                                  ? () {
-                                      onChanged?.call(item.value);
-                                      Navigator.pop(modalContext);
-                                    }
-                                  : null,
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+                      )
+                    : null,
+                trailing: isSelected
+                    ? (selectedIcon ??
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedCheckmarkCircle02,
+                            color: colorScheme.primary,
+                            strokeWidth: 2,
+                          ))
+                    : null,
+                onTap: item.enabled
+                    ? () {
+                        onChanged?.call(item.value);
+                        Navigator.pop(modalContext);
+                      }
+                    : null,
+              );
+            }).toList(),
     );
   }
 

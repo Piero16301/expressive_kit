@@ -1,5 +1,6 @@
 import 'package:expressive_kit/src/widgets/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
@@ -161,6 +162,110 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tileTapped, isTrue);
+    });
+
+    testWidgets(
+      'modal constructor opens bottom sheet with trailing and chevron',
+      (tester) async {
+        var selectedOption = 'Light';
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: StatefulBuilder(
+                builder: (context, setState) {
+                  return ExpressiveListTile.modal(
+                    title: const Text('Theme'),
+                    subtitle: Text(selectedOption),
+                    trailing: const Icon(Icons.palette),
+                    modalTitle: 'Select Theme',
+                    modalItemsBuilder: (modalContext) => [
+                      ListTile(
+                        title: const Text('Dark'),
+                        onTap: () {
+                          setState(() => selectedOption = 'Dark');
+                          Navigator.pop(modalContext);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+
+        expect(find.byIcon(Icons.palette), findsOneWidget);
+        expect(find.byType(HugeIcon), findsOneWidget);
+
+        await tester.tap(find.text('Theme'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Select Theme'), findsOneWidget);
+        await tester.tap(find.text('Dark'));
+        await tester.pumpAndSettle();
+
+        expect(selectedOption, 'Dark');
+        expect(find.text('Select Theme'), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'modal constructor supports modalBuilder, no trailing, and showChevron false',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Column(
+                children: [
+                  ExpressiveListTile.modal(
+                    title: const Text('With Chevron Only'),
+                    modalBuilder: (_) => const Text('Modal Content'),
+                  ),
+                  ExpressiveListTile.modal(
+                    title: const Text('No Chevron'),
+                    trailing: const Icon(Icons.info),
+                    showChevron: false,
+                    modalBuilder: (_) => const Text('Hidden Chevron Modal'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        expect(find.byType(HugeIcon), findsOneWidget);
+        expect(find.byIcon(Icons.info), findsOneWidget);
+
+        await tester.tap(find.text('With Chevron Only'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Modal Content'), findsOneWidget);
+      },
+    );
+
+    testWidgets('modal constructor does not open sheet when disabled', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ExpressiveListTile.modal(
+              title: const Text('Disabled Modal'),
+              enabled: false,
+              modalTitle: 'Should Not Open',
+              modalBuilder: (_) => const Text('Body'),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(HugeIcon), findsOneWidget);
+
+      await tester.tap(find.text('Disabled Modal'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Should Not Open'), findsNothing);
     });
   });
 }

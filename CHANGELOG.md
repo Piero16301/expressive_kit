@@ -1,3 +1,13 @@
+## 0.1.1
+
+* **Modal Bottom Sheet & List Tile Enhancements**:
+  * Added `showExpressiveModalBottomSheet<T>()` helper (`lib/src/widgets/expressive_modal_bottom_sheet.dart`) providing a reusable 28dp rounded Material 3 Expressive modal bottom sheet with optional drag handle, centered title, `maxHeightFraction`, `SafeArea`, automatic scrolling, and support for `itemsBuilder` or custom `builder`.
+  * Added `ExpressiveListTile.modal(...)` named constructor that automatically opens `showExpressiveModalBottomSheet` on tap (`modalTitle`, `modalItemsBuilder` / `modalBuilder`, `maxHeightFraction`, `modalBackgroundColor`, `showDragHandle`) and renders an automatic trailing chevron (`showChevron: true`, combinable with custom `trailing` widgets).
+  * Refactored `ExpressiveDropdownButton` to delegate modal presentation to `showExpressiveModalBottomSheet`.
+* **Example Gallery & Tests**:
+  * Added interactive demos for `ExpressiveListTile.modal` (stateful `Sync frequency` selector and custom `Storage overview` sheet) and direct `showExpressiveModalBottomSheet` calls (`itemsBuilder` and `builder`) in `example/lib/pages/content_page.dart`.
+  * Added dedicated unit/widget tests in `test/src/widgets/expressive_modal_bottom_sheet_test.dart` and expanded `test/src/widgets/expressive_list_tile_test.dart`.
+
 ## 0.1.0
 
 * **New Form & Selection Widgets**:

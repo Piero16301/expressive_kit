@@ -8,6 +8,7 @@ export 'expressive_fab_menu.dart';
 export 'expressive_icon_button.dart';
 export 'expressive_list_tile.dart';
 export 'expressive_loading_indicator.dart';
+export 'expressive_modal_bottom_sheet.dart';
 export 'expressive_navigation_bar.dart';
 export 'expressive_search_bar.dart';
 export 'expressive_slider.dart';

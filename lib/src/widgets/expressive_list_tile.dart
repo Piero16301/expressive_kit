@@ -46,6 +46,7 @@ class ExpressiveBadge extends StatelessWidget {
 /// - Trailing estándar (chevron, texto de estado, etc.)
 /// - Acción dividida (Split action con chevron + divisor + switch) como en
 /// "Tema oscuro".
+/// - Hoja modal inferior integrada mediante [ExpressiveListTile.modal].
 class ExpressiveListTile extends StatelessWidget {
   const ExpressiveListTile({
     required this.title,
@@ -62,7 +63,51 @@ class ExpressiveListTile extends StatelessWidget {
     ),
     this.enabled = true,
     super.key,
-  });
+  }) : _modalTitle = null,
+       _modalItemsBuilder = null,
+       _modalBuilder = null,
+       _modalMaxHeightFraction = 0.65,
+       _modalBackgroundColor = null,
+       _showModalDragHandle = true,
+       _showChevron = false;
+
+  /// Constructor que abre automáticamente un [showExpressiveModalBottomSheet]
+  /// al tocar el elemento. Ideal para filas de configuración agrupadas dentro
+  /// de un [ExpressiveCardGroup].
+  const ExpressiveListTile.modal({
+    required this.title,
+    this._modalTitle,
+    List<Widget> Function(BuildContext modalContext)? modalItemsBuilder,
+    WidgetBuilder? modalBuilder,
+    this.subtitle,
+    this.leading,
+    this.trailing,
+    this._showChevron = true,
+    double maxHeightFraction = 0.65,
+    this._modalBackgroundColor,
+    bool showDragHandle = true,
+    this.contentPadding = const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 12,
+    ),
+    this.enabled = true,
+    super.key,
+  }) : assert(
+         modalItemsBuilder != null || modalBuilder != null,
+         'Must provide either modalItemsBuilder or modalBuilder.',
+       ),
+       assert(
+         maxHeightFraction > 0 && maxHeightFraction <= 1,
+         'maxHeightFraction must be between 0 (exclusive) and 1 (inclusive).',
+       ),
+       secondaryTrailing = null,
+       showSplitDivider = false,
+       onTap = null,
+       onSecondaryTap = null,
+       _modalItemsBuilder = modalItemsBuilder,
+       _modalBuilder = modalBuilder,
+       _modalMaxHeightFraction = maxHeightFraction,
+       _showModalDragHandle = showDragHandle;
 
   /// Constructor con switch integrado en la posición trailing.
   factory ExpressiveListTile.switchTile({
@@ -117,11 +162,51 @@ class ExpressiveListTile extends StatelessWidget {
   final VoidCallback? onSecondaryTap;
   final EdgeInsetsGeometry contentPadding;
   final bool enabled;
+  final String? _modalTitle;
+  final List<Widget> Function(BuildContext modalContext)? _modalItemsBuilder;
+  final WidgetBuilder? _modalBuilder;
+  final double _modalMaxHeightFraction;
+  final Color? _modalBackgroundColor;
+  final bool _showModalDragHandle;
+  final bool _showChevron;
+
+  bool get _hasModal => _modalItemsBuilder != null || _modalBuilder != null;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    final effectiveOnTap = _hasModal
+        ? () => showExpressiveModalBottomSheet<void>(
+            context: context,
+            title: _modalTitle,
+            itemsBuilder: _modalItemsBuilder,
+            builder: _modalBuilder,
+            maxHeightFraction: _modalMaxHeightFraction,
+            backgroundColor: _modalBackgroundColor,
+            showDragHandle: _showModalDragHandle,
+          )
+        : onTap;
+
+    final Widget? effectiveTrailing;
+    if (_showChevron) {
+      final chevron = HugeIcon(
+        icon: HugeIcons.strokeRoundedArrowRight01,
+        size: 20,
+        color: enabled
+            ? colorScheme.onSurfaceVariant
+            : colorScheme.onSurface.withValues(alpha: 0.38),
+      );
+      effectiveTrailing = trailing != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [trailing!, const SizedBox(width: 8), chevron],
+            )
+          : chevron;
+    } else {
+      effectiveTrailing = trailing;
+    }
 
     Widget mainTile = Padding(
       padding: contentPadding,
@@ -160,16 +245,16 @@ class ExpressiveListTile extends StatelessWidget {
               ],
             ),
           ),
-          if (trailing != null && !showSplitDivider) ...[
+          if (effectiveTrailing != null && !showSplitDivider) ...[
             const SizedBox(width: 12),
-            trailing!,
+            effectiveTrailing,
           ],
         ],
       ),
     );
 
-    if (onTap != null && enabled) {
-      mainTile = ExpressivePressable(onTap: onTap, child: mainTile);
+    if (effectiveOnTap != null && enabled) {
+      mainTile = ExpressivePressable(onTap: effectiveOnTap, child: mainTile);
     }
 
     if (showSplitDivider && trailing != null && secondaryTrailing != null) {
