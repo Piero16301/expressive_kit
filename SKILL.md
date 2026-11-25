@@ -428,7 +428,7 @@ const ExpressiveLoadingIndicator.linear(
 ```
 
 #### • `ExpressiveSnackBar` & `showExpressiveSnackBar`
-Floating 20dp rounded snackbars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional title/action/close button, and responsive width across mobile, web, and desktop:
+Floating 20dp rounded snack bars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional title/action/close button, and responsive width across mobile, web, and desktop:
 
 ```dart
 showExpressiveSnackBar(

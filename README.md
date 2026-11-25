@@ -399,7 +399,7 @@ final yearRange = await ExpressiveDatePicker.showYearRangePicker(context: contex
 ```
 
 #### • ExpressiveSnackBar & showExpressiveSnackBar
-20dp floating snackbars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional action/close button, and responsive width:
+20dp floating snack bars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional action/close button, and responsive width:
 
 ```dart
 showExpressiveSnackBar(
