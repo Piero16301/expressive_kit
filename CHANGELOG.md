@@ -1,3 +1,13 @@
+## 0.1.2
+
+* **Dialogs, Pickers & Feedback**:
+  * Added `ExpressiveAlertDialog` and `showExpressiveAlertDialog<T>()` with 28dp rounded corners, responsive `maxWidth` (`400dp` standard / `480dp` for `isForm: true`) with auto-scroll across mobile/web/desktop, optional top `ExpressiveBadge` icon, destructive styling (`isDestructive`), loading state (`isConfirmLoading`), and configurable `ExpressiveButton` actions.
+  * Added `ExpressiveDatePicker` (`showDayPicker`, `showMonthPicker`, `showMonthRangePicker`, `showYearRangePicker`) and `ExpressiveDatePickerDialog` supporting day, single month, month range, and 12-year range selection with range connectors, today indicators, `firstDate`/`lastDate` bounds, and locale-safe date formatting.
+  * Added `ExpressiveSnackBar` and `showExpressiveSnackBar()` with 20dp floating geometry, 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), distinct `HugeIcons` leading icons (`strokeRoundedAlertCircle` for error), optional title/action/close button, and responsive width (margins on mobile `< 600px`, bounded `maxWidth` on web/desktop `>= 600px`).
+* **Example Gallery & Tests**:
+  * Added interactive demos for `ExpressiveAlertDialog`, `ExpressiveDatePicker`, and `ExpressiveSnackBar` in `example/lib/pages/content_page.dart`.
+  * Added dedicated widget test suites in `test/src/widgets/expressive_alert_dialog_test.dart`, `test/src/widgets/expressive_date_picker_test.dart`, and `test/src/widgets/expressive_snack_bar_test.dart`.
+
 ## 0.1.1
 
 * **Modal Bottom Sheet & List Tile Enhancements**:

@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.1.1
+  expressive_kit: ^0.1.2
   hugeicons: ^4.4.0
 ```
 
@@ -427,6 +427,21 @@ const ExpressiveLoadingIndicator.linear(
 )
 ```
 
+#### • `ExpressiveSnackBar` & `showExpressiveSnackBar`
+Floating 20dp rounded snackbars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional title/action/close button, and responsive width across mobile, web, and desktop:
+
+```dart
+showExpressiveSnackBar(
+  context: context,
+  title: 'Export completed',
+  message: 'Your file is ready.',
+  type: ExpressiveSnackBarType.success,
+  actionLabel: 'Undo',
+  onAction: () {},
+  showCloseIcon: true,
+);
+```
+
 ---
 
 ### 4.4 Structure & Navigation
@@ -535,6 +550,31 @@ showExpressiveModalBottomSheet<void>(
 );
 ```
 
+#### • `ExpressiveAlertDialog` & `showExpressiveAlertDialog`
+28dp rounded Material 3 Expressive alert dialog with responsive `maxWidth` (`400dp` standard / `480dp` for `isForm: true`), optional `ExpressiveBadge` icon, destructive mode, loading state, and `ExpressiveButton` actions:
+
+```dart
+showExpressiveAlertDialog<bool>(
+  context: context,
+  title: 'Delete device?',
+  content: 'This action cannot be undone.',
+  icon: const HugeIcon(icon: HugeIcons.strokeRoundedCancel01),
+  isDestructive: true,
+  confirmLabel: 'Delete',
+  cancelLabel: 'Keep',
+);
+```
+
+#### • `ExpressiveDatePicker`
+Material 3 Expressive calendar and period pickers for single day, single month, month range, and 12-year range selection across mobile, web, and desktop:
+
+```dart
+final day = await ExpressiveDatePicker.showDayPicker(context: context);
+final month = await ExpressiveDatePicker.showMonthPicker(context: context);
+final monthRange = await ExpressiveDatePicker.showMonthRangePicker(context: context);
+final yearRange = await ExpressiveDatePicker.showYearRangePicker(context: context);
+```
+
 #### • `ExpressiveCardGroup`
 Curved card container with outer boundary isolation and divided inner rows:
 
@@ -630,6 +670,9 @@ When auditing or refactoring an existing Flutter project, use the following mapp
 | `TextFormField` / `TextField` | `ExpressiveTextFormField.filled(...)` / `.outlined(...)` / `.tonal(...)` | 20dp→24dp focus morphing, `Form` validation, clear & password toggle |
 | `DropdownButton` / `DropdownButtonFormField` | `ExpressiveDropdownButton<T>(...)` | `ExpressiveCardGroup` trigger + 28dp modal bottom sheet picker |
 | `showModalBottomSheet(...)` | `showExpressiveModalBottomSheet(...)` / `ExpressiveListTile.modal(...)` | 28dp rounded top corners, drag handle, `SafeArea`, auto-scroll, and one-line list tile modal trigger |
+| `AlertDialog` / `showDialog` | `ExpressiveAlertDialog(...)` / `showExpressiveAlertDialog(...)` | 28dp corners, `ExpressiveBadge` icon, destructive/form presets, `ExpressiveButton` actions |
+| `showDatePicker` / custom month pickers | `ExpressiveDatePicker.showDayPicker(...)` / `.showMonthPicker(...)` / `.showMonthRangePicker(...)` / `.showYearRangePicker(...)` | Unified day, month, month-range, and year-range pickers with M3 Expressive range connectors |
+| `SnackBar` / `ScaffoldMessenger.showSnackBar` | `showExpressiveSnackBar(...)` / `ExpressiveSnackBar.build(...)` | 20dp floating pill, 5 semantic tonal variants, `HugeIcons`, responsive desktop/mobile width |
 | `ThemeData(...)` | `ExpressiveTheme.light(...)` / `.dark(...)` | Automatic M3 expressive color schemes & elevation |
 | `GoogleFonts.xxx()` | `ExpressiveFonts.xxx` | Zero-network bundled variable font assets |
 | `Icon(Icons.xxx)` | `HugeIcon(icon: HugeIcons.xxx)` | Clean, cohesive iconography across all devices |

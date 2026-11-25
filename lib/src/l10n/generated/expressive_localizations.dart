@@ -278,6 +278,72 @@ abstract class ExpressiveLocalizations {
   /// In en, this message translates to:
   /// **'Blue Grey'**
   String get colorBlueGrey;
+
+  /// No description provided for @textFieldClearText.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear text'**
+  String get textFieldClearText;
+
+  /// No description provided for @textFieldShowPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Show password'**
+  String get textFieldShowPassword;
+
+  /// No description provided for @textFieldHidePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide password'**
+  String get textFieldHidePassword;
+
+  /// No description provided for @datePickerSelectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get datePickerSelectDate;
+
+  /// No description provided for @datePickerSelectMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select month'**
+  String get datePickerSelectMonth;
+
+  /// No description provided for @datePickerSelectMonthRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select month range'**
+  String get datePickerSelectMonthRange;
+
+  /// No description provided for @datePickerSelectYearRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select year range'**
+  String get datePickerSelectYearRange;
+
+  /// No description provided for @datePickerChooseDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a day'**
+  String get datePickerChooseDay;
+
+  /// No description provided for @datePickerChooseMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a month'**
+  String get datePickerChooseMonth;
+
+  /// No description provided for @datePickerChooseMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose months'**
+  String get datePickerChooseMonths;
+
+  /// No description provided for @datePickerChooseYears.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose years'**
+  String get datePickerChooseYears;
 }
 
 class _ExpressiveLocalizationsDelegate

@@ -22,6 +22,7 @@ class ContentPage extends StatefulWidget {
 
 class _ContentPageState extends State<ContentPage> {
   String _syncFrequency = '15 min';
+  String _pickedDateLabel = 'No date or month selected';
 
   @override
   Widget build(BuildContext context) {
@@ -475,6 +476,213 @@ class _ContentPageState extends State<ContentPage> {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const SectionHeader(
+          title: 'Alert Dialog (ExpressiveAlertDialog)',
+          subtitle: '28dp rounded dialogs with optional badge icon, destructive mode, and form layout.',
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            ExpressiveButton.filled(
+              label: 'Standard Dialog',
+              onPressed: () => showExpressiveAlertDialog<void>(
+                context: context,
+                title: 'Save changes?',
+                content: 'Your workspace preferences will be synced across all connected devices.',
+                icon: const HugeIcon(
+                  icon: HugeIcons.strokeRoundedInformationCircle,
+                ),
+                confirmLabel: 'Save',
+                cancelLabel: 'Discard',
+                onConfirm: () {
+                  Navigator.of(context).pop();
+                  widget.onShowFeedback('Changes saved');
+                },
+              ),
+            ),
+            ExpressiveButton.outlined(
+              label: 'Destructive',
+              onPressed: () => showExpressiveAlertDialog<void>(
+                context: context,
+                title: 'Delete device?',
+                content: 'This action cannot be undone.',
+                icon: const HugeIcon(icon: HugeIcons.strokeRoundedCancel01),
+                isDestructive: true,
+                confirmLabel: 'Delete',
+                cancelLabel: 'Keep',
+                onConfirm: () {
+                  Navigator.of(context).pop();
+                  widget.onShowFeedback('Device deleted');
+                },
+              ),
+            ),
+            ExpressiveButton.tonal(
+              label: 'Form Dialog',
+              onPressed: () => showExpressiveAlertDialog<void>(
+                context: context,
+                title: 'Rename workspace',
+                isForm: true,
+                confirmLabel: 'Rename',
+                cancelLabel: 'Cancel',
+                child: ExpressiveTextFormField.filled(
+                  labelText: 'Workspace name',
+                  hintText: 'Expressive Studio',
+                  showClearButton: true,
+                ),
+                onConfirm: () {
+                  Navigator.of(context).pop();
+                  widget.onShowFeedback('Workspace renamed');
+                },
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const SectionHeader(
+          title: 'Date & Month Picker (ExpressiveDatePicker)',
+          subtitle: 'Select a specific day, month, month range, or year range in M3 Expressive style.',
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Selected: $_pickedDateLabel',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            ExpressiveButton.filled(
+              label: 'Pick Day',
+              icon: const HugeIcon(
+                icon: HugeIcons.strokeRoundedCalendar01,
+                size: 18,
+              ),
+              onPressed: () async {
+                final picked = await ExpressiveDatePicker.showDayPicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                );
+                if (picked != null && mounted) {
+                  setState(
+                    () => _pickedDateLabel =
+                        '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}',
+                  );
+                }
+              },
+            ),
+            ExpressiveButton.tonal(
+              label: 'Pick Month',
+              icon: const HugeIcon(
+                icon: HugeIcons.strokeRoundedCalendar02,
+                size: 18,
+              ),
+              onPressed: () async {
+                final picked = await ExpressiveDatePicker.showMonthPicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                );
+                if (picked != null && mounted) {
+                  setState(
+                    () => _pickedDateLabel =
+                        '${picked.year}-${picked.month.toString().padLeft(2, '0')}',
+                  );
+                }
+              },
+            ),
+            ExpressiveButton.outlined(
+              label: 'Month Range',
+              onPressed: () async {
+                final range = await ExpressiveDatePicker.showMonthRangePicker(
+                  context: context,
+                );
+                if (range != null && mounted) {
+                  setState(
+                    () => _pickedDateLabel =
+                        '${range.start.year}-${range.start.month.toString().padLeft(2, '0')} → ${range.end.year}-${range.end.month.toString().padLeft(2, '0')}',
+                  );
+                }
+              },
+            ),
+            ExpressiveButton.outlined(
+              label: 'Year Range',
+              onPressed: () async {
+                final range = await ExpressiveDatePicker.showYearRangePicker(
+                  context: context,
+                );
+                if (range != null && mounted) {
+                  setState(
+                    () => _pickedDateLabel =
+                        '${range.start.year} → ${range.end.year}',
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const SectionHeader(
+          title: 'SnackBar (ExpressiveSnackBar)',
+          subtitle: 'Floating 20dp rounded snackbars with semantic tonal palettes and responsive width.',
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            ExpressiveButton.outlined(
+              label: 'Neutral',
+              onPressed: () => showExpressiveSnackBar(
+                context: context,
+                message: 'Settings updated locally.',
+              ),
+            ),
+            ExpressiveButton.tonal(
+              label: 'Info',
+              onPressed: () => showExpressiveSnackBar(
+                context: context,
+                title: 'Syncing',
+                message: 'Your preferences are being backed up.',
+                type: ExpressiveSnackBarType.info,
+              ),
+            ),
+            ExpressiveButton.filled(
+              label: 'Success',
+              onPressed: () => showExpressiveSnackBar(
+                context: context,
+                message: 'Export completed successfully!',
+                type: ExpressiveSnackBarType.success,
+                actionLabel: 'Undo',
+                onAction: () => widget.onShowFeedback('Undo tapped'),
+                showCloseIcon: true,
+              ),
+            ),
+            ExpressiveButton.tonal(
+              label: 'Warning',
+              onPressed: () => showExpressiveSnackBar(
+                context: context,
+                message: 'Storage is almost full.',
+                type: ExpressiveSnackBarType.warning,
+              ),
+            ),
+            ExpressiveButton.outlined(
+              label: 'Error',
+              onPressed: () => showExpressiveSnackBar(
+                context: context,
+                title: 'Connection failed',
+                message: 'Could not reach the server.',
+                type: ExpressiveSnackBarType.error,
+                showCloseIcon: true,
               ),
             ),
           ],

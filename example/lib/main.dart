@@ -41,6 +41,11 @@ class _ExampleAppState extends State<ExampleApp> {
         fontFamily: _selectedFontFamily,
       ),
       themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      localizationsDelegates: const [
+        ExpressiveLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
+      supportedLocales: ExpressiveLocalizations.supportedLocales,
       home: GalleryScreen(
         isDarkMode: _isDarkMode,
         onToggleTheme: _toggleTheme,

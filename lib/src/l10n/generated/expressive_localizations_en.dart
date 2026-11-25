@@ -95,4 +95,37 @@ class ExpressiveLocalizationsEn extends ExpressiveLocalizations {
 
   @override
   String get colorBlueGrey => 'Blue Grey';
+
+  @override
+  String get textFieldClearText => 'Clear text';
+
+  @override
+  String get textFieldShowPassword => 'Show password';
+
+  @override
+  String get textFieldHidePassword => 'Hide password';
+
+  @override
+  String get datePickerSelectDate => 'Select date';
+
+  @override
+  String get datePickerSelectMonth => 'Select month';
+
+  @override
+  String get datePickerSelectMonthRange => 'Select month range';
+
+  @override
+  String get datePickerSelectYearRange => 'Select year range';
+
+  @override
+  String get datePickerChooseDay => 'Choose a day';
+
+  @override
+  String get datePickerChooseMonth => 'Choose a month';
+
+  @override
+  String get datePickerChooseMonths => 'Choose months';
+
+  @override
+  String get datePickerChooseYears => 'Choose years';
 }

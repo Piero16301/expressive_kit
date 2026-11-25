@@ -1,3 +1,5 @@
+import 'package:expressive_kit/src/l10n/generated/expressive_localizations.dart';
+import 'package:expressive_kit/src/l10n/generated/expressive_localizations_en.dart';
 import 'package:expressive_kit/src/widgets/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -673,6 +675,8 @@ class _ExpressiveTextFormFieldState extends FormFieldState<String> {
   Widget _buildField(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final expressiveL10n =
+        ExpressiveLocalizations.of(context) ?? ExpressiveLocalizationsEn();
     final enabled = _widget.enabled;
     final effectiveErrorText = _widget.errorText ?? errorText;
     final hasError =
@@ -909,7 +913,7 @@ class _ExpressiveTextFormFieldState extends FormFieldState<String> {
                       padding: EdgeInsets.only(top: isMultiline ? 10 : 0),
                       child: Semantics(
                         button: true,
-                        label: 'Clear text',
+                        label: expressiveL10n.textFieldClearText,
                         child: ExpressivePressable(
                           onTap: _handleClear,
                           borderRadius: BorderRadius.circular(999),
@@ -929,7 +933,9 @@ class _ExpressiveTextFormFieldState extends FormFieldState<String> {
                       padding: EdgeInsets.only(top: isMultiline ? 10 : 0),
                       child: Semantics(
                         button: true,
-                        label: _obscureText ? 'Show password' : 'Hide password',
+                        label: _obscureText
+                            ? expressiveL10n.textFieldShowPassword
+                            : expressiveL10n.textFieldHidePassword,
                         child: ExpressivePressable(
                           onTap: _togglePasswordVisibility,
                           borderRadius: BorderRadius.circular(999),

@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.1.1
+  expressive_kit: ^0.1.2
   hugeicons: ^4.4.0
 ```
 
@@ -370,6 +370,46 @@ showExpressiveModalBottomSheet<void>(
       onTap: () => Navigator.pop(modalContext),
     ),
   ],
+);
+```
+
+#### • ExpressiveAlertDialog & showExpressiveAlertDialog
+28dp rounded Material 3 Expressive alert dialog with responsive width (`maxWidth` for mobile/web/desktop), optional `ExpressiveBadge` icon, destructive mode, loading state, and `ExpressiveButton` actions:
+
+```dart
+showExpressiveAlertDialog<bool>(
+  context: context,
+  title: 'Delete device?',
+  content: 'This action cannot be undone.',
+  icon: const HugeIcon(icon: HugeIcons.strokeRoundedCancel01),
+  isDestructive: true,
+  confirmLabel: 'Delete',
+  cancelLabel: 'Keep',
+);
+```
+
+#### • ExpressiveDatePicker
+Calendar and period pickers supporting single day, single month, month range, and 12-year range selection across mobile, web, and desktop:
+
+```dart
+final day = await ExpressiveDatePicker.showDayPicker(context: context);
+final month = await ExpressiveDatePicker.showMonthPicker(context: context);
+final monthRange = await ExpressiveDatePicker.showMonthRangePicker(context: context);
+final yearRange = await ExpressiveDatePicker.showYearRangePicker(context: context);
+```
+
+#### • ExpressiveSnackBar & showExpressiveSnackBar
+20dp floating snackbars with 5 semantic tonal variants (`neutral`, `info`, `success`, `warning`, `error`), `HugeIcons` leading icons, optional action/close button, and responsive width:
+
+```dart
+showExpressiveSnackBar(
+  context: context,
+  title: 'Export completed',
+  message: 'Your file is ready.',
+  type: ExpressiveSnackBarType.success,
+  actionLabel: 'Undo',
+  onAction: () {},
+  showCloseIcon: true,
 );
 ```
 
