@@ -22,7 +22,7 @@ Always ensure `pubspec.yaml` has the required dependencies:
 dependencies:
   flutter:
     sdk: flutter
-  expressive_kit: ^0.1.2
+  expressive_kit: ^0.1.3
   hugeicons: ^4.4.0
 ```
 
@@ -325,17 +325,19 @@ ExpressiveSwitch(
 ```
 
 #### • `ExpressiveSlider`
-Slider with floating value callout, custom step divisions, and spring drag responses:
+Slider with thick capsule track, optional step `divisions`, custom stepper `step`, `onChangeStart`/`onChangeEnd` callbacks, and `-`/`+` stepper buttons (shown automatically when `divisions` is set):
 
 ```dart
 ExpressiveSlider(
   value: sliderValue, // 0.0 - 100.0
   min: 0,
   max: 100,
-  divisions: 10,
-  prefixIcon: const HugeIcon(icon: HugeIcons.strokeRoundedVolumeLow, size: 20),
-  suffixIcon: const HugeIcon(icon: HugeIcons.strokeRoundedVolumeHigh, size: 20),
+  divisions: 20,
+  step: 5,
+  title: 'Volume',
+  onChangeStart: (val) => print('Start: $val'),
   onChanged: (val) => setState(() => sliderValue = val),
+  onChangeEnd: (val) => print('End: $val'),
 )
 ```
 

@@ -22,6 +22,7 @@ class _ControlsPageState extends State<ControlsPage> {
   bool _switchVal2 = false;
   double _sliderVal = 65.0;
   double _sliderStepVal = 3.0;
+  double _sliderCustomStepVal = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -284,9 +285,11 @@ class _ControlsPageState extends State<ControlsPage> {
           value: _sliderVal,
           min: 0,
           max: 100,
-          title: 'Media volume',
-          subtitle: 'Current level: ${_sliderVal.toInt()}%',
+          title: 'Media volume (Continuous, divisions: null)',
+          subtitle: 'Current level: ${_sliderVal.toInt()}% • No +/- steppers',
           onChanged: (val) => setState(() => _sliderVal = val),
+          onChangeEnd: (val) =>
+              widget.onShowFeedback('Volume set to ${val.toInt()}%'),
         ),
         const SizedBox(height: 12),
         ExpressiveSlider(
@@ -294,9 +297,22 @@ class _ControlsPageState extends State<ControlsPage> {
           min: 1,
           max: 5,
           divisions: 4,
-          title: 'Graphics quality (Discrete)',
+          title: 'Graphics quality (Discrete, divisions: 4)',
           subtitle: 'Level: ${_sliderStepVal.toInt()} of 5 stars',
           onChanged: (val) => setState(() => _sliderStepVal = val),
+        ),
+        const SizedBox(height: 12),
+        ExpressiveSlider(
+          value: _sliderCustomStepVal,
+          min: 0,
+          max: 100,
+          divisions: 10,
+          step: 5,
+          title: 'Brightness (Custom step: 5)',
+          subtitle: 'Level: ${_sliderCustomStepVal.toInt()}%',
+          onChanged: (val) => setState(() => _sliderCustomStepVal = val),
+          onChangeEnd: (val) =>
+              widget.onShowFeedback('Brightness set to ${val.toInt()}%'),
         ),
         const SizedBox(height: 24),
         const SectionHeader(

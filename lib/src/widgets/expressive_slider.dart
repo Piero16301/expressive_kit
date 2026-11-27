@@ -10,9 +10,12 @@ class ExpressiveSlider extends StatefulWidget {
   const ExpressiveSlider({
     required this.value,
     required this.onChanged,
+    this.onChangeStart,
+    this.onChangeEnd,
     this.min = 0.0,
     this.max = 1.0,
     this.divisions,
+    this.step,
     this.title,
     this.subtitle,
     this.showSteppers = true,
@@ -27,13 +30,21 @@ class ExpressiveSlider extends StatefulWidget {
        assert(
          value >= min && value <= max,
          'value must be between min and max',
+       ),
+       assert(step == null || step > 0, 'step must be greater than 0'),
+       assert(
+         divisions != null || step == null,
+         'step cannot be provided when divisions is null',
        );
 
   final double value;
   final ValueChanged<double>? onChanged;
+  final ValueChanged<double>? onChangeStart;
+  final ValueChanged<double>? onChangeEnd;
   final double min;
   final double max;
   final int? divisions;
+  final double? step;
   final String? title;
   final String? subtitle;
   final bool showSteppers;
@@ -50,6 +61,8 @@ class ExpressiveSlider extends StatefulWidget {
 
 class _ExpressiveSliderState extends State<ExpressiveSlider> {
   bool _isDragging = false;
+  bool _hasActiveInteraction = false;
+  double? _lastValue;
 
   double get _range => widget.max - widget.min;
 
@@ -58,9 +71,7 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
     return ((widget.value - widget.min) / _range).clamp(0.0, 1.0);
   }
 
-  void _updateValueFromPosition(double localDx, double trackWidth) {
-    if (widget.onChanged == null || trackWidth <= 0) return;
-
+  double _calculateValueFromPosition(double localDx, double trackWidth) {
     final effectiveTrackWidth = trackWidth - widget.thumbWidth;
     final ratio = effectiveTrackWidth > 0
         ? ((localDx - (widget.thumbWidth / 2)) / effectiveTrackWidth).clamp(
@@ -79,25 +90,54 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
       );
     }
 
+    return newValue;
+  }
+
+  void _updateValueFromPosition(double localDx, double trackWidth) {
+    if (widget.onChanged == null || trackWidth <= 0) return;
+
+    final newValue = _calculateValueFromPosition(localDx, trackWidth);
+    _lastValue = newValue;
     widget.onChanged!(newValue);
   }
 
+  void _startInteraction() {
+    if (_hasActiveInteraction) return;
+    _hasActiveInteraction = true;
+    widget.onChangeStart?.call(widget.value);
+  }
+
+  void _endInteraction() {
+    if (!_isDragging && !_hasActiveInteraction) return;
+    _isDragging = false;
+    _hasActiveInteraction = false;
+    final endValue = _lastValue ?? widget.value;
+    _lastValue = null;
+    widget.onChangeEnd?.call(endValue);
+  }
+
+  double get _effectiveStep => widget.step ?? (_range / widget.divisions!);
+
   void _stepDown() {
     if (widget.onChanged == null) return;
-    final step = widget.divisions != null && widget.divisions! > 0
-        ? _range / widget.divisions!
-        : _range * 0.1;
-    final newValue = (widget.value - step).clamp(widget.min, widget.max);
+    final newValue = (widget.value - _effectiveStep).clamp(
+      widget.min,
+      widget.max,
+    );
+    widget.onChangeStart?.call(widget.value);
     widget.onChanged!(newValue);
+    widget.onChangeEnd?.call(newValue);
   }
 
   void _stepUp() {
     if (widget.onChanged == null) return;
-    final step = widget.divisions != null && widget.divisions! > 0
-        ? _range / widget.divisions!
-        : _range * 0.1;
-    final newValue = (widget.value + step).clamp(widget.min, widget.max);
+    final newValue = (widget.value + _effectiveStep).clamp(
+      widget.min,
+      widget.max,
+    );
+    widget.onChangeStart?.call(widget.value);
     widget.onChanged!(newValue);
+    widget.onChangeEnd?.call(newValue);
   }
 
   @override
@@ -122,9 +162,14 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
             ? colorScheme.primary
             : colorScheme.onSurface.withValues(alpha: 0.38));
 
+    final showStepperButtons =
+        widget.showSteppers &&
+        widget.divisions != null &&
+        widget.divisions! > 0;
+
     final sliderWidget = Row(
       children: [
-        if (widget.showSteppers) ...[
+        if (showStepperButtons) ...[
           ExpressiveIconButton(
             icon: const HugeIcon(icon: HugeIcons.strokeRoundedRemove01),
             size: ExpressiveIconButtonSize.small,
@@ -154,6 +199,7 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
                 onHorizontalDragStart: isEnabled
                     ? (details) {
                         setState(() => _isDragging = true);
+                        _startInteraction();
                         _updateValueFromPosition(
                           details.localPosition.dx,
                           trackWidth,
@@ -169,19 +215,21 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
                       }
                     : null,
                 onHorizontalDragEnd: isEnabled
-                    ? (_) => setState(() => _isDragging = false)
+                    ? (_) => setState(_endInteraction)
                     : null,
                 onHorizontalDragCancel: isEnabled
-                    ? () => setState(() => _isDragging = false)
+                    ? () => setState(_endInteraction)
                     : null,
                 onTapDown: isEnabled
                     ? (details) {
+                        _startInteraction();
                         _updateValueFromPosition(
                           details.localPosition.dx,
                           trackWidth,
                         );
                       }
                     : null,
+                onTapUp: isEnabled ? (_) => _endInteraction() : null,
                 child: SizedBox(
                   width: trackWidth,
                   height: widget.thumbHeight,
@@ -304,7 +352,7 @@ class _ExpressiveSliderState extends State<ExpressiveSlider> {
             },
           ),
         ),
-        if (widget.showSteppers) ...[
+        if (showStepperButtons) ...[
           const SizedBox(width: 8),
           ExpressiveIconButton(
             icon: const HugeIcon(icon: HugeIcons.strokeRoundedAdd01),

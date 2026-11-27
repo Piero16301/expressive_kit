@@ -1,3 +1,13 @@
+## 0.1.3
+
+* **`ExpressiveSlider` Enhancements**:
+  * Added optional `onChangeStart` and `onChangeEnd` (`ValueChanged<double>?`) callbacks fired once per drag, tap, cancel, or stepper interaction.
+  * Added optional `double? step` parameter to customize `-`/`+` stepper increments independently of `divisions` (with `assert(step == null || step > 0)`).
+  * Hid `-`/`+` stepper buttons automatically when `divisions` is `null` (or `<= 0`) and added `assert(divisions != null || step == null)` preventing `step` without `divisions`.
+* **Example Gallery & Tests**:
+  * Updated `example/lib/pages/controls_page.dart` to showcase continuous (`divisions: null`), discrete (`divisions: 4`), and custom-step (`divisions: 20, step: 5`) sliders with `onChangeEnd`.
+  * Expanded `test/src/widgets/expressive_slider_test.dart` maintaining **100.0% line coverage** on `expressive_slider.dart`.
+
 ## 0.1.2
 
 * **Dialogs, Pickers & Feedback**:

@@ -13,6 +13,27 @@ void main() {
         () => ExpressiveSlider(value: 25, min: 0, max: 10, onChanged: (_) {}),
         throwsAssertionError,
       );
+      expect(
+        () => ExpressiveSlider(
+          value: 5,
+          min: 0,
+          max: 10,
+          divisions: 5,
+          step: 0,
+          onChanged: (_) {},
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => ExpressiveSlider(
+          value: 5,
+          min: 0,
+          max: 10,
+          step: 5,
+          onChanged: (_) {},
+        ),
+        throwsAssertionError,
+      );
     });
 
     testWidgets('renders title, subtitle, divisions, and custom styling', (
@@ -82,37 +103,21 @@ void main() {
       expect(currentVal, 50);
     });
 
-    testWidgets('stepper buttons without divisions use 10% range', (
-      tester,
-    ) async {
-      double currentVal = 50;
-
+    testWidgets('hides stepper buttons when divisions is null', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: StatefulBuilder(
-              builder: (context, setState) {
-                return ExpressiveSlider(
-                  value: currentVal,
-                  min: 0,
-                  max: 100,
-                  onChanged: (val) => setState(() => currentVal = val),
-                );
-              },
+            body: ExpressiveSlider(
+              value: 50,
+              min: 0,
+              max: 100,
+              onChanged: (_) {},
             ),
           ),
         ),
       );
 
-      final minusFinder = find.byType(ExpressiveIconButton).first;
-      await tester.tap(minusFinder);
-      await tester.pumpAndSettle();
-      expect(currentVal, 40);
-
-      final plusFinder = find.byType(ExpressiveIconButton).last;
-      await tester.tap(plusFinder);
-      await tester.pumpAndSettle();
-      expect(currentVal, 50);
+      expect(find.byType(ExpressiveIconButton), findsNothing);
     });
 
     testWidgets('tap and drag interactions update value', (tester) async {
@@ -269,6 +274,140 @@ void main() {
       );
 
       expect(find.byType(ExpressiveSlider), findsOneWidget);
+    });
+
+    testWidgets(
+      'invokes onChangeStart and onChangeEnd on drag, tap, cancel, and steppers',
+      (tester) async {
+        double currentVal = 50;
+        final starts = <double>[];
+        final ends = <double>[];
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: SizedBox(
+                  width: 300,
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return ExpressiveSlider(
+                        value: currentVal,
+                        min: 0,
+                        max: 100,
+                        divisions: 10,
+                        onChangeStart: starts.add,
+                        onChanged: (val) => setState(() => currentVal = val),
+                        onChangeEnd: ends.add,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        // 1. Horizontal drag
+        final gestureFinder = find.descendant(
+          of: find.byType(LayoutBuilder),
+          matching: find.byType(GestureDetector),
+        );
+        await tester.drag(gestureFinder, const Offset(60, 0));
+        await tester.pumpAndSettle();
+
+        expect(starts.length, 1);
+        expect(starts.first, 50);
+        expect(ends.length, 1);
+        expect(ends.first, currentVal);
+
+        // 2. Tap on track
+        starts.clear();
+        ends.clear();
+        final beforeTap = currentVal;
+        await tester.tapAt(
+          tester.getTopLeft(gestureFinder) + const Offset(40, 10),
+        );
+        await tester.pumpAndSettle();
+
+        expect(starts, [beforeTap]);
+        expect(ends, [currentVal]);
+
+        // 3. Drag cancel
+        starts.clear();
+        ends.clear();
+        final beforeCancel = currentVal;
+        final gesture = await tester.startGesture(
+          tester.getCenter(gestureFinder),
+        );
+        await gesture.moveBy(const Offset(30, 0));
+        await tester.pump(const Duration(milliseconds: 50));
+        await gesture.cancel();
+        await tester.pumpAndSettle();
+
+        expect(starts, [beforeCancel]);
+        expect(ends.length, 1);
+
+        // 4. Stepper buttons (- and +)
+        starts.clear();
+        ends.clear();
+        final beforeStepDown = currentVal;
+        await tester.tap(find.byType(ExpressiveIconButton).first);
+        await tester.pumpAndSettle();
+
+        expect(starts, [beforeStepDown]);
+        expect(ends, [currentVal]);
+
+        starts.clear();
+        ends.clear();
+        final beforeStepUp = currentVal;
+        await tester.tap(find.byType(ExpressiveIconButton).last);
+        await tester.pumpAndSettle();
+
+        expect(starts, [beforeStepUp]);
+        expect(ends, [currentVal]);
+      },
+    );
+
+    testWidgets('stepper buttons use custom step when provided', (
+      tester,
+    ) async {
+      double currentVal = 50;
+      final starts = <double>[];
+      final ends = <double>[];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: StatefulBuilder(
+              builder: (context, setState) {
+                return ExpressiveSlider(
+                  value: currentVal,
+                  min: 0,
+                  max: 100,
+                  divisions: 10,
+                  step: 5,
+                  onChangeStart: starts.add,
+                  onChanged: (val) => setState(() => currentVal = val),
+                  onChangeEnd: ends.add,
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.byType(ExpressiveIconButton).first);
+      await tester.pumpAndSettle();
+      expect(currentVal, 45);
+      expect(starts, [50]);
+      expect(ends, [45]);
+
+      await tester.tap(find.byType(ExpressiveIconButton).last);
+      await tester.pumpAndSettle();
+      expect(currentVal, 50);
+      expect(starts, [50, 45]);
+      expect(ends, [45, 50]);
     });
   });
 }

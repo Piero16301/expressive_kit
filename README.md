@@ -32,7 +32,7 @@ Add `expressive_kit` and `hugeicons` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  expressive_kit: ^0.1.2
+  expressive_kit: ^0.1.3
   hugeicons: ^4.4.0
 ```
 
@@ -176,16 +176,20 @@ ExpressiveSwitch(
 ```
 
 #### • ExpressiveSlider
-Continuous and discrete sliders featuring thick capsule tracks and animated spring thumb:
+Continuous and discrete sliders featuring thick capsule tracks, animated spring thumb, `onChangeStart`/`onChangeEnd` callbacks, and automatic `-`/`+` stepper buttons (shown when `divisions` is provided, with optional custom `step`):
 
 ```dart
 ExpressiveSlider(
   value: sliderValue,
   min: 0,
   max: 100,
+  divisions: 20,
+  step: 5,
   title: 'Sound Volume',
   subtitle: 'Media and notifications',
+  onChangeStart: (val) => print('Started at $val'),
   onChanged: (val) => setState(() => sliderValue = val),
+  onChangeEnd: (val) => print('Ended at $val'),
 )
 ```
 
